@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thung_khao_rbac/Configuration.dart';
 class AcessToStatus extends StatelessWidget {
   final String TextStatusINButton;
   const AcessToStatus({
@@ -14,7 +15,7 @@ class AcessToStatus extends StatelessWidget {
         width: MediaQuery.of(context).size.width*0.9,
         child: FlatButton(
           onPressed: ()=>{},
-          child: Text(TextStatusINButton,style: TextStyle(fontSize: 14),),
+          child: Text(TextStatusINButton,style: TextStyle(fontSize: Config.OrderDetail_fontB),),
         ),
 
 
@@ -31,7 +32,7 @@ class StatusOnBILL extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text('รอดำเนินการ',style: TextStyle(fontSize: 14,color: Colors.red),),
+      child: Text('รอดำเนินการ',style: TextStyle(fontSize: Config.OrderDetail_fontH,color: Colors.red),),
       alignment: Alignment.centerRight,
       width: MediaQuery.of(context).size.width*0.68,
     );
@@ -47,7 +48,7 @@ class StatusOfBill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text(TypeOfStatus,style: TextStyle(fontSize: 14),),
+      child: Text(TypeOfStatus,style: TextStyle(fontSize: Config.OrderDetail_fontB),),
       alignment: Alignment.center,
       width: MediaQuery.of(context).size.width*0.2,
     );
@@ -93,7 +94,7 @@ class DateAndTime extends StatelessWidget {
     return Container(
         child: Text(
           DateANDTimeFont,
-          style: TextStyle(fontSize: 13, color: Colors.black),
+          style: TextStyle(fontSize: Config.OrderDetail_fontSB, color: Colors.black),
         ));
   }
 }
@@ -108,7 +109,7 @@ class NameText extends StatelessWidget {
     return Container(
         child: Text(
           'ข้าวหอมมะลิ รสใบมะลิ สกัดพิเศษ',
-          style: TextStyle(fontSize: 16, color: Colors.black),
+          style: TextStyle(fontSize: Config.OrderDetail_fontB, color: Colors.black),
         ));
   }
 }
@@ -124,49 +125,11 @@ class MassageTitle extends StatelessWidget {
       alignment: Alignment.centerLeft,
       child: Text(
         'คำสั่งซื้อ',
-        style: TextStyle(color: Colors.white),
+        style: TextStyle(color: Colors.white,fontSize: Config.OrderDetail_fontH),
       ),
     );
   }
 }
-
-class NavigationButton extends StatelessWidget {
-  final Icon BarIcon;
-  final String BarText;
-
-  const NavigationButton({
-    Key key,
-    this.BarIcon,
-    this.BarText,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: ShapeDecoration(shape: CircleBorder()),
-      child: FlatButton(
-        onPressed: () => {},
-        child: Column(
-          children: [
-            Container(
-              height: MediaQuery.of(context).size.height * 0.01,
-            ),
-            BarIcon,
-            Container(
-              height: MediaQuery.of(context).size.height * 0.01,
-            ),
-            Text(
-              BarText,
-              style: TextStyle(fontSize: 8),
-            )
-          ],
-        ),
-        minWidth: MediaQuery.of(context).size.width * 0,
-      ),
-    );
-  }
-}
-
 class BacksButton extends StatelessWidget {
   const BacksButton({
     Key key,

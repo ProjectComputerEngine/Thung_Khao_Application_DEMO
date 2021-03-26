@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:thung_khao_rbac/Configuration.dart';
 // import 'ChatMainBox.dart';
 class AdminText extends StatelessWidget {
   final String  message;
@@ -29,7 +29,7 @@ class AdminText extends StatelessWidget {
                 color: Colors.white24),
             child: Text(
               message,
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white,fontSize: Config.Chat_fontB),
               maxLines: 10,
             ),
           ),
@@ -79,7 +79,7 @@ class UserText extends StatelessWidget {
                 color: Colors.white24),
             child: Text(
               message,
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white,fontSize: Config.Chat_fontH),
             ),
 
           ),
@@ -170,7 +170,7 @@ class NameText extends StatelessWidget {
     return Container(
       child: Text(
         '$name',
-        style: TextStyle(color: Colors.white, fontSize: 18),
+        style: TextStyle(color: Colors.white, fontSize: Config.Chat_fontH),
       ),
       alignment: Alignment.centerLeft,
       width: MediaQuery.of(context).size.width * 0.5,

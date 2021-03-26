@@ -1,42 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:thung_khao_rbac/Configuration.dart';
 import 'package:thung_khao_rbac/Admin/UpdatePresonalAdmin.dart';
-class PlaceText extends StatelessWidget {
-  final String TextPLACE;
-  const PlaceText({
-    Key key, this.TextPLACE,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.fromLTRB(
-          MediaQuery.of(context).size.width * 0.08,
-          0,
-          MediaQuery.of(context).size.width * 0.05,
-          0),
-      alignment: Alignment.topLeft,
-      child: Row(
-        children: [
-          Container(
-            child: Text(
-              'ที่อยู่',
-              style: TextStyle(color: Colors.black87,fontSize: Theme.of(context).textTheme.bodyText1.height),
-            ),
-          ),
-          Container(
-            width: MediaQuery.of(context).size.width * 0.05,
-          ),
-          Expanded(
-            child: Text(
-              TextPLACE,
-              style: TextStyle(color: Colors.grey,fontSize: Theme.of(context).textTheme.bodyText1.height),
-            ),
-          )
-        ],
-      ),
-    );
-  }
-}
 
 class ClickButton extends StatelessWidget {
   final String TextButton;
@@ -57,7 +21,7 @@ class ClickButton extends StatelessWidget {
           padding: EdgeInsets.zero,
           child: Text(
             TextButton,
-            style: TextStyle(fontSize: 12),
+            style: TextStyle(fontSize: Config.PersonalAdmin_fontB),
           ),
           onPressed: event,
         ),
@@ -87,7 +51,7 @@ class TextUnderName extends StatelessWidget {
           Container(
             child: Text(
               FrontText,
-              style: TextStyle(color: Colors.black87,fontSize: Theme.of(context).textTheme.bodyText1.height),
+              style: TextStyle(color: Colors.black87,fontSize: Config.PersonalAdmin_fontH),
             ),
           ),
           Container(
@@ -96,7 +60,7 @@ class TextUnderName extends StatelessWidget {
           Container(
             child: Text(
               EndText,
-              style: TextStyle(color: Colors.grey,fontSize: Theme.of(context).textTheme.bodyText1.height),
+              style: TextStyle(color: Colors.grey,fontSize: Config.PersonalAdmin_fontH),
             ),
           )
         ],
@@ -119,7 +83,7 @@ class TextName extends StatelessWidget {
       child: Text(
         SelfNameText,
         style: TextStyle(
-          fontSize: 20,
+          fontSize: Config.PersonalAdmin_fontHB,
           color: Colors.white,
           shadows: [
             Shadow(
@@ -156,60 +120,5 @@ class PictureProfile extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class NavigationButton extends StatelessWidget {
-  final String BarText;
-  final Icon BarIcon;
-
-  const NavigationButton({
-    Key key,
-    this.BarIcon,
-    this.BarText,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: ShapeDecoration(shape: CircleBorder()),
-      child: FlatButton(
-        onPressed: () => {},
-        child: Column(
-          children: [
-            Container(
-              height: MediaQuery.of(context).size.height * 0.01,
-            ),
-            BarIcon,
-            Container(
-              height: MediaQuery.of(context).size.height * 0.01,
-            ),
-            Text(
-              BarText,
-              style: TextStyle(fontSize: 8),
-            )
-          ],
-        ),
-        minWidth: MediaQuery.of(context).size.width * 0,
-      ),
-    );
-  }
-}
-
-class BackButtons extends StatelessWidget {
-  const BackButtons({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return FlatButton(
-        padding: EdgeInsets.zero,
-        onPressed: () => {},
-        minWidth: MediaQuery.of(context).size.width * 0,
-        child: Icon(
-          Icons.arrow_back_ios,
-          color: Colors.white,
-        ));
   }
 }

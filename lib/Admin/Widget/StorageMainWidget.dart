@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thung_khao_rbac/Configuration.dart';
 class AddButton extends StatelessWidget {
   final Function GotoNewproduct;
   const AddButton({
@@ -73,7 +74,7 @@ class NavigationButton extends StatelessWidget {
             ),
             Text(
               BarText,
-              style: TextStyle(fontSize: 8),
+              style: TextStyle(fontSize: Config.StorageMain_fontB),
             )
           ],
         ),
@@ -120,14 +121,14 @@ class TextPrice extends StatelessWidget {
             Text(
               FrontText,
               textAlign: TextAlign.start,
-              style: TextStyle(color: Colors.white, fontSize: 10),
+              style: TextStyle(color: Colors.white, fontSize: Config.StorageMain_fontB),
             ),
             Text(MediumText,
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.white, fontSize: 10)),
+                style: TextStyle(color: Colors.white, fontSize: Config.StorageMain_fontB)),
             Text(EndText,
                 textAlign: TextAlign.end,
-                style: TextStyle(color: Colors.white, fontSize: 10)),
+                style: TextStyle(color: Colors.white, fontSize: Config.StorageMain_fontB)),
           ],
         ));
   }
@@ -155,7 +156,7 @@ class TextRiceName extends StatelessWidget {
               NameText.replaceAll("\\n", '\n'),
 
               textAlign: TextAlign.start,
-              style: TextStyle(color: Colors.white, fontSize: 10),
+              style: TextStyle(color: Colors.white, fontSize: Config.StorageMain_fontB),
             ),
           ],
         ));
@@ -186,7 +187,7 @@ class ProductText extends StatelessWidget {
     return Container(
       child: Text(
         'คลังสินค้า',
-        style: TextStyle(color: Colors.white, fontSize: 16),
+        style: TextStyle(color: Colors.white, fontSize: Config.StorageMain_fontH),
       ),
       alignment: Alignment.centerLeft,
       width: MediaQuery.of(context).size.width * 0.5,

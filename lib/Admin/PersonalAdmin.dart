@@ -72,7 +72,7 @@ class PersonalState extends State<PersonalAdminMain> {
                         backgroundImage: AssetImage('res/logo.png'),
                       )),
                   TextName(
-                    SelfNameText: '',
+                    SelfNameText: 'Mr.Samart Ketrahong',
                   ),
                   Container(
                     height: MediaQuery.of(context).size.height * 0.04,

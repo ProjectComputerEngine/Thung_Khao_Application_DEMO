@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:thung_khao_rbac/Admin/OrderDetail.dart';
+import 'package:thung_khao_rbac/Configuration.dart';
 class PictureProfile extends StatelessWidget {
   final String url;
   const PictureProfile({
@@ -33,7 +34,7 @@ class TextBillButton extends StatelessWidget {
         color: Colors.white,
         child: FlatButton(
           onPressed: SeleteStatus,
-          child: Text(TextInButtons,style: TextStyle(fontSize: 12),),
+          child: Text(TextInButtons,style: TextStyle(fontSize: Config.OrderMain_fontB),),
         ),
       ),
     );
@@ -68,7 +69,7 @@ class NavigationButton extends StatelessWidget {
             ),
             Text(
               BarText,
-              style: TextStyle(fontSize: 8),
+              style: TextStyle(fontSize: Config.OrderMain_fontB),
             )
           ],
         ),
@@ -116,7 +117,7 @@ class MassageTitle extends StatelessWidget {
       alignment: Alignment.centerLeft,
       child: Text(
         'คำสั่งซื้อ',
-        style: TextStyle(color: Colors.white),
+        style: TextStyle(color: Colors.white,fontSize: Config.OrderMain_fontH),
       ),
     );
   }
@@ -174,10 +175,10 @@ class OrderItem extends StatelessWidget {
                     ),
                     Text(
                       NameOwner,
-                      style: TextStyle(fontSize: 12, color: Colors.black),
+                      style: TextStyle(fontSize: Config.OrderMain_fontB, color: Colors.black),
                     ),
                     Text(Date,
-                        style: TextStyle(fontSize: 12, color: Colors.black38))
+                        style: TextStyle(fontSize: Config.OrderMain_fontB, color: Colors.black38))
                   ]),
             ),
             Container(
@@ -189,7 +190,7 @@ class OrderItem extends StatelessWidget {
                 children: [
                   Text(
                     'สถานะ : ' + Status,
-                    style: TextStyle(fontSize: 12, color: Colors.black38),
+                    style: TextStyle(fontSize: Config.OrderMain_fontB, color: Colors.black38),
                   ),
                 ],
               ),

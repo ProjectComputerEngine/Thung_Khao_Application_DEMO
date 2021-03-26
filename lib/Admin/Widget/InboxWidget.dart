@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:thung_khao_rbac/Admin/AdminMain.dart';
+import 'package:thung_khao_rbac/Configuration.dart';
 class AdminText extends StatelessWidget {
   const AdminText({
     Key key,
@@ -167,7 +168,7 @@ class NameText extends StatelessWidget {
     return Container(
       child: Text(
         '$name',
-        style: TextStyle(color: Colors.white, fontSize: 18),
+        style: TextStyle(color: Colors.white, fontSize: Config.Inbox_fontH),
       ),
       alignment: Alignment.centerLeft,
       width: MediaQuery.of(context).size.width * 0.5,
@@ -284,7 +285,7 @@ class MassageTitle extends StatelessWidget {
       alignment: Alignment.centerLeft,
       child: Text(
         'กล่องข้อมูล',
-        style: TextStyle(color: Colors.white),
+        style: TextStyle(color: Colors.white,fontSize: Config.Inbox_fontH),
       ),
     );
   }
@@ -354,11 +355,11 @@ class MessageButtons extends StatelessWidget {
                   children: [
                     Text(
                       '$nameUesr',
-                      style: TextStyle(color: NewNameColor, fontSize: 12),
+                      style: TextStyle(color: NewNameColor, fontSize: Config.Inbox_fontHB),
                     ),
                     Text(
                       '$lastmessage',
-                      style: TextStyle(color: NewColorText, fontSize: 10),
+                      style: TextStyle(color: NewColorText, fontSize: Config.Inbox_fontB),
                     ),
                   ],
                 ),
@@ -371,7 +372,7 @@ class MessageButtons extends StatelessWidget {
                   children: [
                     Text(
                       '$time',
-                      style: TextStyle(color: TimeColor, fontSize: 8),
+                      style: TextStyle(color: TimeColor, fontSize: Config.Inbox_fontSB),
                     ),
                     Container(
                       alignment: Alignment.center,

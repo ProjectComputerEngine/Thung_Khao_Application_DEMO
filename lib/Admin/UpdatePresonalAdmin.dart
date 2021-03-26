@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:thung_khao_rbac/Admin/Widget/BottonNavigationBarAdminWidget.dart';
-import './Widget/PersonalAdminWidget.dart';
+import './Widget/UpdatePersonalAdminWidget.dart';
 import 'AdminMain.dart';
 class PersonalAdminUpdate extends StatefulWidget {
   @override

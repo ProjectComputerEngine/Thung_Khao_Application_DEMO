@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thung_khao_rbac/Configuration.dart';
 class NavigationButton extends StatelessWidget {
   final Icon BarIcon;
   const NavigationButton({
@@ -53,11 +54,11 @@ class LessRiceButton extends StatelessWidget {
                     children: [
                       Text(
                         'ข้าวน่ารักน่ารัก',
-                        style: TextStyle(color: Colors.white, fontSize: 10),
+                        style: TextStyle(color: Colors.white, fontSize: Config.adminMain_fontB ),
                       ),
                       Text(
                         'จำนวน 555 กระสอบ',
-                        style: TextStyle(color: Colors.white, fontSize: 10),
+                        style: TextStyle(color: Colors.white, fontSize: Config.adminMain_fontB),
                       ),
                     ],
                   ),
@@ -139,7 +140,7 @@ class CircleButton extends StatelessWidget {
             Container(
               child: Text(
                 'กราฟ',
-                style: TextStyle(color: Colors.white, fontSize: 10),
+                style: TextStyle(color: Colors.white, fontSize: Config.adminMain_fontB),
               ),
             ),
           ],
@@ -203,14 +204,14 @@ class BoxFirstRow extends StatelessWidget {
                 ),
                 Text(
                   FirstLineFirstColumn,
-                  style: TextStyle(color: Colors.white, fontSize: 12),
+                  style: TextStyle(color: Colors.white, fontSize: Config.adminMain_fontB),
                 ),
                 Container(
                   height: MediaQuery.of(context).size.height * 0.05,
                 ),
                 Text(
                   SeconeLineFirstColoumn,
-                  style: TextStyle(color: Colors.white, fontSize: 12),
+                  style: TextStyle(color: Colors.white, fontSize: Config.adminMain_fontB),
                 ),
               ],
             ),
@@ -230,12 +231,12 @@ class BoxFirstRow extends StatelessWidget {
                   height: MediaQuery.of(context).size.height * 0.01,
                 ),
                 Text(FirstlineSeconeColumn,
-                    style: TextStyle(color: Colors.white, fontSize: 12)),
+                    style: TextStyle(color: Colors.white, fontSize: Config.adminMain_fontB)),
                 Container(
                   height: MediaQuery.of(context).size.height * 0.05,
                 ),
                 Text(SeconeLineSeconeColoumn,
-                    style: TextStyle(color: Colors.white, fontSize: 12)),
+                    style: TextStyle(color: Colors.white, fontSize: Config.adminMain_fontB)),
               ],
             ),
           ),
@@ -255,7 +256,7 @@ class TextFirstLine extends StatelessWidget {
     return Container(
       child: Text(
         'รายวัน',
-        style: TextStyle(color: Colors.white, fontSize: 14),
+        style: TextStyle(color: Colors.white, fontSize: Config.adminMain_fontH),
       ),
     );
   }
