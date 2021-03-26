@@ -32,6 +32,24 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+# Http request
+  http: ^0.12.2
+# Date Format
+  intl: ^0.16.1
+# Provider
+  provider: ^4.3.3
+# Web Socket on Chat
+  web_socket_channel: ^1.0.5
+# File picker on Image Uplaod
+  file_picker: ^2.1.7
+# Minimize Application
+  minimize_app: ^0.1.1
+# Rx Stream
+  rxdart: ^0.20.0
+# Path Management
+  path_provider: ^1.6.27
+# Database in Device
+  sembast: ^2.4.10+3
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -45,7 +63,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
+  assets:
+    - res/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
