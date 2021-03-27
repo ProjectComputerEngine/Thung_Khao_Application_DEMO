@@ -3,9 +3,13 @@ class Config{
  static final double adminMain_fontH = 20;
  static final double adminMain_fontB = 12;
  static final double adminMain_fontSB = 10;
- // OrderDetail
+
+ // OrderDetail - Admin and Shop
  static final double OrderDetail_fontH = 20;
+ static final double OrderDetail_fontHS = 18;
+ static final double OrderDetail_fontBS = 15;
  static final double OrderDetail_fontB = 12;
+ static final double OrderDetail_fontBB = 13;
  static final double OrderDetail_fontSB = 10;
 
  // OrderMain
@@ -42,9 +46,20 @@ class Config{
  static final double PersonalAdmin_fontB = 14;
  static final double PersonalAdmin_fontSB = 10;
 
+// ------------------------ Shop -----------------------------//
 
- // UpdatePersonalAdmin
- static final double UpdatePersonalAdmin_fontB = 14;
+ // PersonalShop
+ static final double PersonalShop_fontB = 14;
+ static final double PersonalShop_fontH = 20;
+
+ // UpdatePersonalShop
+ static final double UpdatePersonalShop_fontB = 14;
+ static final double UpdatePersonalShop_fontH = 20;
+
+//OrderHistory
+ static final double OrderHistory_fontB = 14;
+ static final double OrderHistory_fontBS = 13;
+ static final double OrderHistory_fontH = 20;
 
 
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thung_khao_rbac/Admin/AddProduct.dart';
 import 'package:thung_khao_rbac/Admin/AdminMain.dart';
 import 'package:thung_khao_rbac/Admin/StorageDetail.dart';
 import 'package:thung_khao_rbac/Admin/Widget/BottonNavigationBarAdminWidget.dart';
@@ -127,7 +128,7 @@ class StorageStatus extends State<StorageMain> {
           ),
           floatingActionButton: Container(
             child: FloatingActionButton(
-              onPressed: (){},
+              onPressed: ()=>Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>AddProductMain())),
               child: Icon(Icons.add),
               backgroundColor: Colors.red,
             ),

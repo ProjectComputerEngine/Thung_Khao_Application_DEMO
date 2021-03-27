@@ -32,7 +32,7 @@ class StatusOnBILL extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text('รอดำเนินการ',style: TextStyle(fontSize: Config.OrderDetail_fontH,color: Colors.red),),
+      child: Text('รอดำเนินการ',style: TextStyle(fontSize: Config.OrderDetail_fontBS,color: Colors.red),),
       alignment: Alignment.centerRight,
       width: MediaQuery.of(context).size.width*0.68,
     );

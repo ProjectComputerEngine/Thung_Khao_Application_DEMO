@@ -59,7 +59,7 @@ class ClickButton extends StatelessWidget {
           padding: EdgeInsets.zero,
           child: Text(
             TextButton,
-            style: TextStyle(fontSize: Config.UpdatePersonalAdmin_fontB),
+            style: TextStyle(fontSize: 18),
           ),
           onPressed: event,
         ),

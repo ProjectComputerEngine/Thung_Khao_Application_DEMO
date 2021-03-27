@@ -20,7 +20,7 @@ class ChatBoxStat extends State<ChatBoxMain> {
 
   @override
   void dispose() {
-    print('Dispose Chat Complete');
+    print('Dispose Chat Admin Complete');
     super.dispose();
   }
 

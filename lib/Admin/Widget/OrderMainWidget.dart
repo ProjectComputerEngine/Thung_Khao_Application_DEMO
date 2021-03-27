@@ -171,7 +171,7 @@ class OrderItem extends StatelessWidget {
                   children: [
                     Text(
                       'Order #${IDOrder}',
-                      style: TextStyle(color: Colors.red),
+                      style: TextStyle(color: Colors.red,fontSize: Config.OrderDetail_fontB),
                     ),
                     Text(
                       NameOwner,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:thung_khao_rbac/Configuration.dart';
 class SaveBUTTON extends StatelessWidget {
   final Function save;
   final FocusNode myNode;
@@ -117,7 +116,34 @@ class NoteTextField extends StatelessWidget {
     );
   }
 }
+class NavigationButton extends StatelessWidget {
+  final String BarText;
+  final Icon BarIcon;
 
+  const NavigationButton({
+    Key key, this.BarIcon, this.BarText,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+
+      decoration: ShapeDecoration(shape: CircleBorder()),
+      child: FlatButton(onPressed: () => {},
+
+        child: Column(children: [
+          Container(height: MediaQuery.of(context).size.height*0.01,),
+          BarIcon,
+          Container(height: MediaQuery.of(context).size.height*0.01,),
+          Text(BarText,style: TextStyle(fontSize: 8),)
+        ],),
+        minWidth: MediaQuery.of(context).size.width * 0,),
+
+
+
+    );
+  }
+}
 class RecommendTextField extends StatelessWidget {
   final TextEditingController recommend;
   final FocusNode myNode;
@@ -140,7 +166,7 @@ class RecommendTextField extends StatelessWidget {
                 0,
                 MediaQuery.of(context).size.width * 0.01,
                 0),
-            child: Text('คำแนะนำ',style: TextStyle(fontSize: Config.StorageDetail_fontB),),
+            child: Text('คำแนะนำ'),
           ),
           Card(
             child: Container(

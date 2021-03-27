@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:thung_khao_rbac/Configuration.dart';
+import 'package:thung_khao_rbac/Admin/UpdatePresonalAdmin.dart';
+
 class PlaceText extends StatelessWidget {
   final String TextPLACE;
   const PlaceText({
@@ -20,7 +22,7 @@ class PlaceText extends StatelessWidget {
           Container(
             child: Text(
               'ที่อยู่',
-              style: TextStyle(color: Colors.black87,fontSize: Config.PersonalShop_fontB),
+              style: TextStyle(color: Colors.black87,fontSize: Theme.of(context).textTheme.bodyText1.height),
             ),
           ),
           Container(
@@ -87,7 +89,7 @@ class TextUnderName extends StatelessWidget {
           Container(
             child: Text(
               FrontText,
-              style: TextStyle(color: Colors.black87,fontSize: Config.PersonalAdmin_fontB),
+              style: TextStyle(color: Colors.black87,fontSize: Theme.of(context).textTheme.bodyText1.height),
             ),
           ),
           Container(
@@ -96,7 +98,7 @@ class TextUnderName extends StatelessWidget {
           Container(
             child: Text(
               EndText,
-              style: TextStyle(color: Colors.grey,fontSize: Config.PersonalShop_fontB),
+              style: TextStyle(color: Colors.grey,fontSize: Theme.of(context).textTheme.bodyText1.height),
             ),
           )
         ],
@@ -119,7 +121,7 @@ class TextName extends StatelessWidget {
       child: Text(
         SelfNameText,
         style: TextStyle(
-          fontSize: Config.PersonalShop_fontH,
+          fontSize: 20,
           color: Colors.white,
           shadows: [
             Shadow(
