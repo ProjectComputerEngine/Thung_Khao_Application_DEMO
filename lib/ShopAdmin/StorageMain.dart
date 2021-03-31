@@ -1,8 +1,10 @@
+import 'package:thung_khao_rbac/Admin/PersonalAdmin.dart';
+
 import '../ShopAdmin/StorageDetail.dart';
 import './Widget/StorageMainWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:thung_khao_rbac/ShopAdmin/Widget/BottonNavigationBarShopWidget.dart';
-import 'ShopMain.dart';
+
 class StorageMain extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -25,7 +27,7 @@ class StorageStatus extends State<StorageMain> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: ()=>
-          Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>ShopMain())),
+          Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>PersonalAdminMain())),
       child: Scaffold(
           bottomNavigationBar: Container(
             height: MediaQuery.of(context).size.height * 0.08,
@@ -57,7 +59,7 @@ class StorageStatus extends State<StorageMain> {
                       Container(
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                              image: AssetImage("res/BackgroundShop.png"),
+                              image: AssetImage("res/BackgroundAdmin.png"),
                               fit: BoxFit.cover),
                         ),
                       ),

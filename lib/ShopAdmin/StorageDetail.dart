@@ -91,7 +91,7 @@ class StorageDetailStatus extends State<StorageDetail> {
                 Container(
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage("res/BackgroundShop.png"),
+                        image: AssetImage("res/BackgroundAdmin.png"),
                         fit: BoxFit.cover),
                   ),
                 ),

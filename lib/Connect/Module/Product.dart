@@ -31,4 +31,5 @@ class Product {
         this.UrlImage2,
         this.UrlImage3,
         this.Note});
+
 }

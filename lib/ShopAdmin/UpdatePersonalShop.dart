@@ -1,3 +1,6 @@
+import 'package:thung_khao_rbac/Admin/AdminMain.dart';
+import 'package:thung_khao_rbac/Admin/PersonalAdmin.dart';
+
 import './Widget/UpdatePersonalShopWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:thung_khao_rbac/ShopAdmin/Widget/BottonNavigationBarShopWidget.dart';
@@ -10,9 +13,22 @@ class UpdatePersonalShop extends StatefulWidget {
 }
 
 class UpdatePersonalShopState extends State<UpdatePersonalShop> {
-
+  TextEditingController nameShopController ;
+  TextEditingController nameOwnerController ;
+  TextEditingController telController ;
+  TextEditingController emailController ;
+  TextEditingController gpsController ;
+  TextEditingController addressController ;
   @override
   void initState() {
+    
+    nameShopController = TextEditingController();
+    nameOwnerController = TextEditingController();
+    telController = TextEditingController();
+    emailController = TextEditingController();
+    gpsController = TextEditingController();
+    addressController = TextEditingController();
+    
     super.initState();
   }
 
@@ -26,7 +42,7 @@ class UpdatePersonalShopState extends State<UpdatePersonalShop> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      //onWillPop: () => Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>AdminMain())),
+      onWillPop: () => Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>PersonalAdminMain())),
       child: Scaffold(
         bottomNavigationBar: MenuNavigation(),
         body: Container(
@@ -36,7 +52,7 @@ class UpdatePersonalShopState extends State<UpdatePersonalShop> {
               Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage('res/Background.png'), fit: BoxFit.cover),
+                      image: AssetImage('res/BackgroundAdmin.png'), fit: BoxFit.cover),
                 ),
               ),
               Container(
@@ -61,13 +77,18 @@ class UpdatePersonalShopState extends State<UpdatePersonalShop> {
                     ),
                   ),
                   Container(height: MediaQuery.of(context).size.height * 0.08),
-                  Container(
-                      height: MediaQuery.of(context).size.height * 0.15,
-                      width: MediaQuery.of(context).size.width * 0.25,
-                      child: CircleAvatar(
-                        backgroundColor: Colors.white,
-                        backgroundImage: AssetImage('res/logo.png'),
-                      )),
+                  FlatButton(
+                    onPressed: (){
+                      print('OK');
+                    },
+                    child: Container(
+                        height: MediaQuery.of(context).size.height * 0.15,
+                        width: MediaQuery.of(context).size.width * 0.25,
+                        child: CircleAvatar(
+                          backgroundColor: Colors.white,
+                          backgroundImage: AssetImage('res/logo.png'),
+                        )),
+                  ),
                   TextFormField(),
                   Container(
                     height: MediaQuery.of(context).size.height * 0.04,

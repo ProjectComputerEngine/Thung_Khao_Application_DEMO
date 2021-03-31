@@ -7,14 +7,13 @@ import './Module/Product.dart';
 import './Module/Order.dart';
 import './Module/Admin.dart';
 import './Module/ShopAdmin.dart';
-import 'package:intl/intl.dart';
 
 class DatabaseProduct {
   final String dbname = 'Product.DB';
 
   Future<Database> openDatabase() async {
     Directory app = await getApplicationDocumentsDirectory();
-    String dbpath = app.path + dbname;
+    String dbpath = app.path +'/'+ dbname;
     print(dbpath);
     DatabaseFactory dbFactory = await databaseFactoryIo;
     Database db = await dbFactory.openDatabase(dbpath);
@@ -24,7 +23,6 @@ class DatabaseProduct {
   addProduct(Product product) async {
     var db = await this.openDatabase();
     var store = intMapStoreFactory.store("Product");
-    var date = DateFormat.yMd(product.DateStart).add_Hm().toString();
     var keyID = store.add(db, {
       'ID': product.ID,
       'Name': product.Name,
@@ -32,7 +30,7 @@ class DatabaseProduct {
       'Price': product.Price,
       'Promotion': product.Promotion,
       'Star': product.Star,
-      'DateStart': date,
+      'DateStart': product.DateStart,
       'Storage': product.Storage,
       'Recommend': product.Recommend,
       'Weight': product.Weight,
@@ -42,7 +40,6 @@ class DatabaseProduct {
       'UrlImage3': product.UrlImage3,
       'Note': product.Note,
     });
-    print('KeyID' + keyID.toString());
     db.close();
   }
 
@@ -88,7 +85,7 @@ class DatabaseMessage {
 
   Future<Database> openDatabase() async {
     Directory app = await getApplicationDocumentsDirectory();
-    String dbpath = app.path + dbname;
+    String dbpath = app.path +'/'+  dbname;
     print(dbpath);
     DatabaseFactory dbFactory = await databaseFactoryIo;
     Database db = await dbFactory.openDatabase(dbpath);
@@ -98,15 +95,13 @@ class DatabaseMessage {
   addMessage(Message message) async {
     var db = await this.openDatabase();
     var store = intMapStoreFactory.store("Message");
-    var date = DateFormat.yMd(message.time).add_Hm().toString();
     var keyID = store.add(db, {
       'Message': message.message,
       'Name': message.name,
       'ImageURL': message.imageURL,
-      'Time': date,
+      'Time': message.time,
       'ID': message.ID,
     });
-    print('KeyID' + keyID.toString());
     db.close();
   }
 
@@ -143,7 +138,7 @@ class DatabaseOrder {
 
   Future<Database> openDatabase() async {
     Directory app = await getApplicationDocumentsDirectory();
-    String dbpath = app.path + dbname;
+    String dbpath = app.path +'/'+  dbname;
     print(dbpath);
     DatabaseFactory dbFactory = await databaseFactoryIo;
     Database db = await dbFactory.openDatabase(dbpath);
@@ -153,15 +148,13 @@ class DatabaseOrder {
   addOrder(Order order) async {
     var db = await this.openDatabase();
     var store = intMapStoreFactory.store("Order");
-    var date = DateFormat.yMd(order.Date).add_Hm().toString();
     var keyID = store.add(db, {
       'Status': order.Status,
       'Name': order.Name,
       'ImageURL': order.Image_URL,
-      'Time': date,
+      'Time': order.Date,
       'ID': order.ID,
     });
-    print('KeyID' + keyID.toString());
     db.close();
   }
 
@@ -175,8 +168,8 @@ class DatabaseOrder {
         ID: record['ID'],
         Name: record['Name'],
         Status: record['Status'],
-        Image_URL: record['ImageURL'],
-        Date: record['Time'],
+        Image_URL: record['Image_URL'],
+        Date: record['Date'],
       ));
     }
     return order;
@@ -191,14 +184,14 @@ class DatabaseOrder {
 
 // -----------------------------------------------------------------------------
 
-class DatabaseAdmin {
+class DatabaseUser {
   final String dbname;
 
-  DatabaseAdmin(this.dbname);
+  DatabaseUser(this.dbname);
 
   Future<Database> openDatabase() async {
     Directory app = await getApplicationDocumentsDirectory();
-    String dbpath = app.path + dbname;
+    String dbpath = app.path +'/'+dbname;
     print(dbpath);
     DatabaseFactory dbFactory = await databaseFactoryIo;
     Database db = await dbFactory.openDatabase(dbpath);
@@ -208,7 +201,7 @@ class DatabaseAdmin {
   addAdmin(Admin admin) async {
     var db = await this.openDatabase();
     var store = intMapStoreFactory.store("User");
-    var date = DateFormat.yMd(admin.DateLogin).add_Hm().toString();
+    store.drop(db);
     var keyID = store.add(db, {
       'ID':admin.ID,
       'Name_Device':admin.Name_Device,
@@ -217,14 +210,14 @@ class DatabaseAdmin {
       'Tel':admin.Tel,
       'Position':admin.Position,
       'Image_URL':admin.Image_URL,
+      'Address':admin.Address
     });
-    print('KeyID' + keyID.toString());
     db.close();
   }
   addShop(Shop shop) async {
     var db = await this.openDatabase();
     var store = intMapStoreFactory.store("User");
-    var date = DateFormat.yMd(shop.DateLogin).add_Hm().toString();
+    store.drop(db);
     var keyID = store.add(db, {
       'ID': shop.ID,
       'IP': shop.IP,
@@ -238,17 +231,16 @@ class DatabaseAdmin {
       'Email': shop.Email,
       'GPS': shop.GPS,
     });
-    print('KeyID' + keyID.toString());
     db.close();
   }
 
-  Future<dynamic> loadAllDataAdmin() async {
+  Future<Admin> loadAllDataAdmin() async {
     var db = await this.openDatabase();
     var store = intMapStoreFactory.store("User");
     var snapshot = await store.find(db);
-    List admin = List<Admin>();
+    Admin admin;
     for (var record in snapshot) {
-      admin.add(Admin(
+      admin = Admin(
         ID: record['ID'],
         Name_Device: record['Name_Device'],
         DateLogin: record['DateLogin'],
@@ -256,18 +248,19 @@ class DatabaseAdmin {
         Tel: record['Tel'],
         Position: record['Position'],
         Image_URL: record['Image_URL'],
-      ));
+        Address: record['Address']
+      );
     }
     return admin;
   }
 
-  Future<dynamic> loadAllDataShop() async {
+  Future<Shop> loadAllDataShop() async {
     var db = await this.openDatabase();
     var store = intMapStoreFactory.store("User");
     var snapshot = await store.find(db);
-    List shop = List<Shop>();
+    Shop shop;
     for (var record in snapshot) {
-      shop.add(Shop(
+      shop = Shop(
        ID: record['ID'],
        IP: record['IP'],
         Name_Device: record['Name_Device'],
@@ -279,7 +272,7 @@ class DatabaseAdmin {
         Image_URL: record['Image_URL'],
         Email: record['Email'],
         GPS: record['GPS'],
-      ));
+      );
     }
     return shop;
   }
@@ -288,5 +281,6 @@ class DatabaseAdmin {
     var db = await this.openDatabase();
     var store = intMapStoreFactory.store("User");
     store.drop(db);
+    print('drop data user complete');
   }
 }

@@ -61,7 +61,7 @@ class ChatBoxStat extends State<ChatBoxMain> {
                       Container(
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                              image: AssetImage("res/Background.png"),
+                              image: AssetImage("res/BackgroundShop.png"),
                               fit: BoxFit.cover),
                         ),
                       ),

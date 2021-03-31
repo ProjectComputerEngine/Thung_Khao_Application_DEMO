@@ -34,15 +34,16 @@ class MenuNavigation extends StatelessWidget {
             },
             BarText: 'คลังสินค้า',
           ),
+          // NavigationButton(
+          //   BarIcon: Icon(Icons.home),
+          //   BarText: 'หน้าหลัก',
+          //   goto: (){
+          //     print('Go to Admin Main');
+          //     Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>AdminMain()));
+          //
+          //   },
+          // ),
           NavigationButton(
-            BarIcon: Icon(Icons.home),
-            BarText: 'หน้าหลัก',
-            goto: (){
-              print('Go to Admin Main');
-              Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>AdminMain()));
-
-            },
-          ), NavigationButton(
             BarIcon: Icon(Icons.chat),
             BarText: 'ข้อความ',
             goto: (){

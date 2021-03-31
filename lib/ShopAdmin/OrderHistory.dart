@@ -150,7 +150,7 @@ class OrderHistoryState extends State<OrderHistory> {
                     Container(
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: AssetImage("res/Background.png"),
+                            image: AssetImage("res/BackgroundShop.png"),
                             fit: BoxFit.cover),
                       ),
                     ),

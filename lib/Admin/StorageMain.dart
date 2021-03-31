@@ -3,7 +3,13 @@ import 'package:thung_khao_rbac/Admin/AddProduct.dart';
 import 'package:thung_khao_rbac/Admin/AdminMain.dart';
 import 'package:thung_khao_rbac/Admin/StorageDetail.dart';
 import 'package:thung_khao_rbac/Admin/Widget/BottonNavigationBarAdminWidget.dart';
+import 'package:thung_khao_rbac/Configuration.dart';
+import 'package:thung_khao_rbac/Connect/Module/Product.dart';
 import './Widget/StorageMainWidget.dart';
+
+import 'package:thung_khao_rbac/Connect/BackEnd/Product.dart';
+import 'package:provider/provider.dart';
+
 class StorageMain extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -12,11 +18,11 @@ class StorageMain extends StatefulWidget {
 }
 
 class StorageStatus extends State<StorageMain> {
-
   @override
   void initState() {
     super.initState();
   }
+
   @override
   void dispose() {
     super.dispose();
@@ -25,8 +31,8 @@ class StorageStatus extends State<StorageMain> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: ()=>
-        Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>AdminMain())),
+      onWillPop: () => Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => AdminMain())),
       child: Scaffold(
           bottomNavigationBar: Container(
             height: MediaQuery.of(context).size.height * 0.08,
@@ -45,7 +51,6 @@ class StorageStatus extends State<StorageMain> {
                     children: [
                       BackButton(
                         color: Colors.white,
-
                       ),
                       ProductText(),
                     ],
@@ -55,22 +60,27 @@ class StorageStatus extends State<StorageMain> {
                 //---------------//
                 Flexible(
                     child: Stack(children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage("res/BackgroundShop.png"),
-                              fit: BoxFit.cover),
-                        ),
-                      ),
-                      Container(child: FutureBuilder(future: Future.value(true),builder: (context,snapshost){
-                        if(snapshost.hasData){
-                          List<Widget> list =[];
+                  Container(
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage("res/BackgroundAdmin.png"),
+                          fit: BoxFit.cover),
+                    ),
+                  ),
+                  Container(
+                      child: FutureBuilder<bool>(
+                    future: Provider.of<ProductConnection>(context).showAllProduct(),
+                    builder: (context, snapshost) {
+                      if (snapshost.hasData) {
+                        if(snapshost.data){
+                          List<Product> product = Provider.of<ProductConnection>(context).product;
+                          List<Widget> list = [];
                           return ListView.builder(
                             padding: EdgeInsets.zero,
-                            itemBuilder: (context, index)  {
+                            itemBuilder: (context, index) {
                               list.clear();
                               if (index % 2 == 0) {
-                                if (index < 10) {
+                                if (index < product.length) {
                                   list.add(Flexible(
                                     child: ProductItem(
                                       goToDetail: () {
@@ -78,16 +88,18 @@ class StorageStatus extends State<StorageMain> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    StorageDetail()));
+                                                    StorageDetail(productDetail: product[index],)));
                                       },
-                                      name: 'ข้าวสาว หอมมะลิ เเท้ 100000 เปอร์เซน',
-                                      price:'1022',
-                                      num: '1000',
-                                      imageUrl:'http://128.199.110.176:8080/upload/img/8images.jpeg',
+                                      name:
+                                          product[index].Name,
+                                      price: product[index].Price,
+                                      num: product[index].Num,
+                                      imageUrl:
+                                          product[index].UrlImage1,
                                     ),
                                   ));
                                 }
-                                if (index + 1 < 10) {
+                                if (index + 1 < product.length) {
                                   list.add(Flexible(
                                     child: ProductItem(
                                       goToDetail: () {
@@ -95,51 +107,57 @@ class StorageStatus extends State<StorageMain> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    StorageDetail()));
+                                                    StorageDetail(productDetail: product[index],)));
                                       },
-                                      name: 'ข้าวสาว หอมมะลิ เเท้ 100000 เปอร์เซน',
-                                      price:'1022',
-                                      num: '1000',
-                                      imageUrl:'http://128.199.110.176:8080/upload/img/8images.jpeg',
-                                    ),
+                                      name:
+                                      product[index+1].Name,
+                                      price: product[index+1].Price,
+                                      num: product[index+1].Num,
+                                      imageUrl:
+                                      product[index+1].UrlImage1,),
                                   ));
                                 } else {
-                                  list.add(
-                                      Flexible(child: Container()));
+                                  list.add(Flexible(child: Container()));
                                 }
                               }
                               return Row(
                                 children: list,
                               );
                             },
-                            itemCount: 10,
+                            itemCount: product.length,
                           );
                         }
-                        else if( snapshost.hasError){
-                          return Center(child: Text('เกิดข้อผิดพลาดทางเครือข่าย'),);
-                        }
                         else{
-                          return CircularProgressIndicator();
+                          return Center(child: Text('เกิดข้อผิดพลาดทางเครือข่าย',style: TextStyle(fontSize:Config.Error_fontH),),);
                         }
-                      }, )),
-                    ]))
+                      } else if (snapshost.hasError) {
+                        return Center(
+                          child: Text('เกิดข้อผิดพลาดทางเครือข่าย',style: TextStyle(fontSize:Config.Error_fontH)),
+                        );
+                      } else {
+                        return CircularProgressIndicator();
+                      }
+                    },
+                  )),
+                ]))
               ],
             ),
           ),
           floatingActionButton: Container(
             child: FloatingActionButton(
-              onPressed: ()=>Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>AddProductMain())),
+              onPressed: () => Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => AddProductMain())),
               child: Icon(Icons.add),
               backgroundColor: Colors.red,
             ),
           )
-        // Container(
-        //   alignment: Alignment.bottomCenter,
-        //   child: AddButton(
-        //     GotoNewproduct: () => {},
-        //   ),
-        // ),
-      ),
+          // Container(
+          //   alignment: Alignment.bottomCenter,
+          //   child: AddButton(
+          //     GotoNewproduct: () => {},
+          //   ),
+          // ),
+          ),
     );
   }
 }

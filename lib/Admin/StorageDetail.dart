@@ -1,9 +1,13 @@
 import 'dart:async';
+import 'package:thung_khao_rbac/Connect/Module/Product.dart';
+
 import './Widget/StorageDetailWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:thung_khao_rbac/Admin/Widget/BottonNavigationBarAdminWidget.dart';
 class StorageDetail extends StatefulWidget {
+final Product productDetail;
 
+  const StorageDetail({Key key, this.productDetail}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -42,11 +46,13 @@ class StorageDetailStatus extends State<StorageDetail> {
 
   // BehaviorSubject streamController;
 
+  List<String> wxh;
 
 
   @override
   void initState() {
     // streamController = BehaviorSubject();
+    // wxh = widget.productDetail.Size.split('x');
     startDate = DateTime.now();
 
     nameNode = FocusNode();
@@ -62,11 +68,23 @@ class StorageDetailStatus extends State<StorageDetail> {
     saveNode = FocusNode();
     super.initState();
   }
+  _selectDate(BuildContext context, FocusNode nextNode) async {
+    selectDate = await showDatePicker(
+      context: context,
+      initialDate: startDate, // Refer step 1
+      firstDate: DateTime(startDate.year - 5),
+      lastDate: DateTime(startDate.year + 5),
+    );
+    if (selectDate != null) {
+      nextNode.requestFocus();
+    }
+    setState(() {});
+  }
 
   @override
   void dispose() {
     // streamController.close();
-    print('steam complete !');
+    print('Dispose Storage Detail');
     super.dispose();
   }
 
@@ -91,7 +109,7 @@ class StorageDetailStatus extends State<StorageDetail> {
                 Container(
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage("res/BackgroundShop.png"),
+                        image: AssetImage("res/BackgroundAdmin.png"),
                         fit: BoxFit.cover),
                   ),
                 ),
@@ -116,13 +134,13 @@ class StorageDetailStatus extends State<StorageDetail> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             LargeImageBox(
-                                content: Image.network('http://128.199.110.176:8080/upload/img/8images.jpeg')),
+                                content: Image.network(widget.productDetail.UrlImage1)),
                             SpaceWidth(),
                             TwoImageBox(
-                                contact: Image.network('http://128.199.110.176:8080/upload/img/8images.jpeg')),
+                                contact: Image.network(widget.productDetail.UrlImage1)),
                             SpaceWidth(),
                             TwoImageBox(
-                                contact: Image.network('http://128.199.110.176:8080/upload/img/8images.jpeg')),
+                                contact: Image.network(widget.productDetail.UrlImage1)),
                           ],
                         )
                     ),
@@ -146,21 +164,21 @@ class StorageDetailStatus extends State<StorageDetail> {
                           SpaceHeight(),
                           ProductNameTextField(
                             enable: true,
-                            value: 'ข้าวทดสอบ',
+                            value: widget.productDetail.Name,
                             myNode: nameNode,
                             nextNode: priceNode,
                             name: nameController,
                           ),
                           PriceTextField(
                             enable: true,
-                            value: '10000',
+                            value: widget.productDetail.Price,
                             myNode: priceNode,
                             nextNode: weightNode,
                             price: priceController,
                           ),
                           WeightTextField(
                             enable: true,
-                            value: '10',
+                            value: widget.productDetail.Weight,
                             myNode: weightNode,
                             nextNode: widthNode,
                             weight: weightController,
@@ -170,8 +188,8 @@ class StorageDetailStatus extends State<StorageDetail> {
                           SpaceText(),
                           SizePacketTextField(
                             enable: true,
-                            value1: '10',
-                            value2:'20',
+                            value1: 'wxh[0]',
+                            value2: 'wxh[1]',
                             width: widthController,
                             height: heightController,
                             my1Node: widthNode,
@@ -182,29 +200,29 @@ class StorageDetailStatus extends State<StorageDetail> {
                           IncressProductText(),
                           SpaceText(),
                           IncressProductTextField(
-                            value: '200',
+                            value: widget.productDetail.Num,
                             myNode: numNode,
                             nextNode: dateStartNode,
                             num: numController,
                           ),
                           ProductionDateTextField(
                               myNode: dateStartNode,
-                              dateselect: (){},
-                              dateshow: '20-20-20'),
+                              dateselect: ()=>_selectDate(context,storageNode),
+                              dateshow: widget.productDetail.DateStart),
                           PlaceTextField(
-                            value: '- ข้าว',
+                            value: widget.productDetail.Storage,
                             myNode: storageNode,
                             nextNode: recommendNode,
                             storage: storageController,
                           ),
                           RecommendTextField(
-                            value: ' อื่นๆ',
+                            value: widget.productDetail.Recommend,
                             myNode: recommendNode,
                             nextNode: noteNode,
                             recommend: recommendController,
                           ),
                           NoteTextField(
-                            value: ' อื่นๆ',
+                            value: widget.productDetail.Note,
                             myNode: noteNode,
                             nextNode: saveNode,
                             note: noteController,

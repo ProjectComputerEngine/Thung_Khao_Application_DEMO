@@ -107,7 +107,7 @@ class AddProductState extends State<AddProductMain> {
                     Container(
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: AssetImage("res/BackgroundShop.png"),
+                            image: AssetImage("res/BackgroundAdmin.png"),
                             fit: BoxFit.cover),
                       ),
                     ),

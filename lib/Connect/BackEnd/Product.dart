@@ -6,7 +6,7 @@ import 'package:thung_khao_rbac/Connect/Module/Product.dart';
 class ProductConnection extends Connection {
   List<Product> product = [];
 
-  addProduct() {
+  addProduct(Product newProduct) {
 
   }
 
@@ -14,7 +14,7 @@ class ProductConnection extends Connection {
 
   }
 
-  Future<String> showAllProduct() async {
+  Future<bool> showAllProduct() async {
     try {
       var request = await connectionProductAll();
       if (request != null) {
@@ -40,17 +40,17 @@ class ProductConnection extends Connection {
               Weight: jsonData[i]['Wight'],
             ));
           }
-          return 'true';
+          return true;
         } else {
-          return 'Error';
+          return false;
         }
-        return request;
+        // return request;
         // return 'Error';
       } else {
-        return 'Error';
+        return false;
       }
     } catch (error) {
-      return 'Error';
+      return false;
     }
   }
 }

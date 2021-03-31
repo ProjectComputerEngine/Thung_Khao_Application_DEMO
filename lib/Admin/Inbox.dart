@@ -1,9 +1,7 @@
 import 'dart:async';
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:thung_khao_rbac/Admin/AdminMain.dart';
 import 'package:thung_khao_rbac/Admin/Chat.dart';
+import 'package:thung_khao_rbac/Admin/PersonalAdmin.dart';
 import 'package:thung_khao_rbac/Admin/Widget/BottonNavigationBarAdminWidget.dart';
 import './Widget/InboxWidget.dart';
 
@@ -30,7 +28,7 @@ class InboxState extends State<InboxMain> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () => Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => AdminMain())),
+          context, MaterialPageRoute(builder: (context) => PersonalAdminMain())),
       child: Scaffold(
         backgroundColor: Color.fromRGBO(32, 50, 50, 10),
         body: Container(
@@ -73,7 +71,7 @@ class InboxState extends State<InboxMain> {
                     Container(
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: AssetImage("res/BackgroundShop.png"),
+                            image: AssetImage("res/BackgroundAdmin.png"),
                             fit: BoxFit.cover),
                       ),
                     ),

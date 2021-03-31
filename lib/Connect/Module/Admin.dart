@@ -6,14 +6,16 @@ class Admin {
   final String Tel;
   final String Position;
   final String Image_URL;
+  final String Address;
 
   Admin(
-      {this.ID,
+      { this.ID,
         this.Name_Device,
         this.DateLogin,
         this.Name,
         this.Tel,
         this.Position,
-        this.Image_URL,});
+        this.Image_URL,
+      this.Address});
 
 }

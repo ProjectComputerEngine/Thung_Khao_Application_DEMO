@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:thung_khao_rbac/Admin/PersonalAdmin.dart';
 import 'package:thung_khao_rbac/Admin/Widget/BottonNavigationBarAdminWidget.dart';
+import 'package:thung_khao_rbac/Configuration.dart';
+import 'package:thung_khao_rbac/Connect/BackEnd/Order.dart';
 import './Widget/OrderMainWidget.dart';
-import 'AdminMain.dart';
 
+import 'package:provider/provider.dart';
+import 'package:thung_khao_rbac/Connect/Module/Order.dart';
 class OrderMain extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -28,7 +32,7 @@ class BillState extends State<OrderMain> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () => Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => AdminMain())),
+          context, MaterialPageRoute(builder: (context) => PersonalAdminMain())),
       child: Scaffold(
         bottomNavigationBar: MenuNavigation(),
         body: Form(
@@ -149,30 +153,39 @@ class BillState extends State<OrderMain> {
                     Container(
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                            image: AssetImage("res/Background.png"),
+                            image: AssetImage("res/BackgroundShop.png"),
                             fit: BoxFit.cover),
                       ),
                     ),
                     Container(
-                      child: FutureBuilder(
-                        future: Future.value(true),
+                      child: FutureBuilder<bool>(
+                        future: Provider.of<OrderConnection>(context).selectAllOrder(status.toString()),
                         builder: (context, snapshost) {
                           if (snapshost.hasData) {
-                            return ListView.builder(
-                                padding: EdgeInsets.zero,
-                                itemCount: 10,
-                                itemBuilder: (context, index) {
-                                  return OrderItem(
-                                    UrlImage:
-                                    'https://i.pinimg.com/474x/51/59/4d/51594d7ca12505563ceaa6553cc69f3c.jpg',
-                                    Date: '12/1/60',
-                                    IDOrder: '0',
-                                    NameOwner: 'Samart',
-                                    Status: 'รอโอน',
-                                  );
-                                });
-                          } else {
-                            return CircularProgressIndicator();
+                            if(snapshost.data){
+                              List<Order> listOrder= Provider.of<OrderConnection>(context).orderList;
+                              return ListView.builder(
+                                  padding: EdgeInsets.zero,
+                                  itemCount: listOrder.length,
+                                  itemBuilder: (context, index) {
+                                    return OrderItem(
+                                      UrlImage:
+                                          listOrder[index].Image_URL,
+                                      Date:listOrder[index].Date,
+                                      IDOrder: listOrder[index].ID,
+                                      NameOwner: listOrder[index].Name,
+                                      Status: listOrder[index].Status,
+                                    );
+                                  });
+                            }
+                            else{
+                              return Center(child: Text('เกิดข้อผิดพลาดทางเครือข่าย กรุณาลองใหม่อีกครั้ง',style: TextStyle(fontSize: Config.Error_fontH),),);
+                            }
+                          } else if(snapshost.connectionState == ConnectionState.waiting){
+                            return Center(child: CircularProgressIndicator());
+                          }
+                          else{
+                            return Center(child: Text('ไม่พบข้อมูล',style: TextStyle(fontSize: Config.Error_fontH),),);
                           }
                         },
                       ),

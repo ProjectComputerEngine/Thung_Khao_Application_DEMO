@@ -61,6 +61,9 @@ class Config{
  static final double OrderHistory_fontBS = 13;
  static final double OrderHistory_fontH = 20;
 
+ // Error Loading
+ static final double Error_fontH = 20;
+
 
 
 
