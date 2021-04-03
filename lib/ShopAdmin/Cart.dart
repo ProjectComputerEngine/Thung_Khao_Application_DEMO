@@ -1,10 +1,13 @@
 import 'package:thung_khao_rbac/Configuration.dart';
+import 'package:thung_khao_rbac/Connect/BackEnd/Order.dart';
 import 'package:thung_khao_rbac/ShopAdmin/StorageMain.dart';
 
 import './Widget/CartWidget.dart';
 import 'package:flutter/material.dart';
 
 import 'Widget/BottonNavigationBarShopWidget.dart';
+
+import 'package:provider/provider.dart';
 
 class Cart extends StatefulWidget {
   @override
@@ -59,7 +62,7 @@ class CartState extends State<Cart> {
                               0,
                               MediaQuery.of(context).size.width * 0.01,
                               0),
-                          child: Column(
+                          child: Row(
                             children: [
                               BacksButton(),
                               MassageTitle(),
@@ -86,14 +89,19 @@ class CartState extends State<Cart> {
                                   bottomLeft: Radius.circular(8),
                                   bottomRight: Radius.circular(8))),
                           child: FutureBuilder(
-                              future: Future.value(true),
+                              future: Provider.of<OrderConnection>(context).selectAllBill(),
                               builder: (context, snapshot) {
                                 if (snapshot.hasData) {
-                                  return ListView.builder(
-                                      itemCount: 10,
-                                      itemBuilder: (context, index) {
-                                        return ProductItem();
-                                      });
+                                  if(snapshot.data){
+                                    return ListView.builder(
+                                        itemCount: Provider.of<OrderConnection>(context).billList.length,
+                                        itemBuilder: (context, index) {
+                                          return ProductItem(bill: Provider.of<OrderConnection>(context).billList[index],);
+                                        });
+                                  }
+                                  else{
+                                    return Center(child: Text('ไม่พบข้อมูล',style: TextStyle(fontSize: Config.Error_fontH),),);
+                                  }
                                 } else {
                                   return Center(
                                     child: CircularProgressIndicator(),
@@ -101,6 +109,13 @@ class CartState extends State<Cart> {
                                 }
                               }),
                         ),
+                        Container(
+                          child: Row(
+                            children: [
+                              TextButton(onPressed: ()=>Provider.of<OrderConnection>(context,listen: false).billClear(), child: Text('ล้าง'))
+                            ],
+                          ),
+                        )
                       ],
                     ),
                   ),

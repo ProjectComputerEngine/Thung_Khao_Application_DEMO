@@ -94,29 +94,63 @@ class LoginConnection extends Connection {
     }
   }
 
-  Future<Admin> updateAdminData(String name, String tel, String address,
+  Future<bool> updateAdminDataPathImage(String name, String tel, String address,
       String filePath, String id) async {
     String complete =
         await connectionUpdateAdminData(name, tel, address, filePath, id);
     if (complete != 'Error') {
-      _databaseUser.clearData();
+      await _databaseUser.clearData();
       admin = Admin(
         Name: name,
-        Address: admin.Address,
+        Address: address,
         Image_URL: complete,
         Position: admin.Position,
         DateLogin: admin.DateLogin,
         ID: admin.ID,
-        Tel: admin.Tel,
+        Tel: tel,
         Name_Device: admin.Name_Device,
       );
-      print('Yes');
+      await _databaseUser.addAdmin(admin);
+      return true;
     } else {
-      print('No');
+      return false;
     }
   }
 
-  logout() {
-     _databaseUser.clearData();
+  Future<bool> updateShopDataPathImage(
+      String nameShop,
+      String nameOwner,
+      String tel,
+      String email,
+      String GPS,
+      String address,
+      String filePath,
+      String id) async {
+    String complete = await connectionUpdateShopData(
+        nameShop, nameOwner, tel, email, GPS, address, filePath, id);
+    if (complete != 'Error') {
+      await _databaseUser.clearData();
+      shop = Shop(
+        Name_Device: shop.Name_Device,
+        Tel: tel,
+        ID: shop.ID,
+        DateLogin: shop.DateLogin,
+        Image_URL: complete,
+        Address: address,
+        GPS:GPS,
+        Email: email,
+        Name_Owner: nameOwner,
+        IP: shop.ID,
+        Name_Shop: nameShop,
+      );
+      await _databaseUser.addShop(shop);
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  logout() async {
+    await _databaseUser.clearData();
   }
 }

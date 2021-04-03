@@ -1,9 +1,16 @@
 import 'dart:async';
+import 'package:thung_khao_rbac/Connect/Module/Product.dart';
+import 'package:thung_khao_rbac/ShopAdmin/BackEnd/StorageDetailBackend.dart';
+
 import './Widget/StoratgeDetailWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:thung_khao_rbac/ShopAdmin/Widget/BottonNavigationBarShopWidget.dart';
-class StorageDetail extends StatefulWidget {
+import './BackEnd/UpdatePersonalShopBackend.dart';
 
+class StorageDetail extends StatefulWidget {
+  final Product productDetail;
+
+  const StorageDetail({Key key, this.productDetail}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -12,18 +19,16 @@ class StorageDetail extends StatefulWidget {
 }
 
 class StorageDetailStatus extends State<StorageDetail> {
-
-  TextEditingController nameController = TextEditingController();
-  TextEditingController priceController = TextEditingController();
-  TextEditingController weightController = TextEditingController();
-  TextEditingController widthController = TextEditingController();
-  TextEditingController heightController = TextEditingController();
-
-  // TextEditingController dateStartController = TextEditingController();
-  TextEditingController storageController = TextEditingController();
-  TextEditingController noteController = TextEditingController();
-  TextEditingController recommendController = TextEditingController();
-  TextEditingController numController = TextEditingController();
+  TextEditingController nameController;
+  TextEditingController priceController;
+  TextEditingController weightController;
+  TextEditingController widthController;
+  TextEditingController heightController;
+  TextEditingController storageController;
+  TextEditingController noteController;
+  TextEditingController recommendController;
+  TextEditingController numController;
+  TextEditingController num;
 
   FocusNode nameNode;
   FocusNode priceNode;
@@ -42,11 +47,36 @@ class StorageDetailStatus extends State<StorageDetail> {
 
   // BehaviorSubject streamController;
 
+  List<String> wxh;
+  int numitem = 1;
 
+  void addCount() {
+    setState(() {
+      numitem++;
+      num.text = numitem.toString();
+      print(numitem.toString());
+    });
+  }
+
+  void commitCount() {
+    setState(() {
+      numitem = int.parse(num.text);
+      print(numitem.toString());
+    });
+  }
+
+  void negativeCount() {
+    setState(() {
+      numitem < 2 ? null : numitem--;
+      num.text = numitem.toString();
+      print(numitem.toString());
+    });
+  }
 
   @override
   void initState() {
     // streamController = BehaviorSubject();
+    wxh = widget.productDetail.Size.split('X');
     startDate = DateTime.now();
 
     nameNode = FocusNode();
@@ -60,6 +90,19 @@ class StorageDetailStatus extends State<StorageDetail> {
     recommendNode = FocusNode();
     noteNode = FocusNode();
     saveNode = FocusNode();
+
+    nameController = TextEditingController(text: widget.productDetail.Name);
+    priceController = TextEditingController(text: widget.productDetail.Price);
+    weightController = TextEditingController(text: widget.productDetail.Weight);
+    widthController = TextEditingController(text: wxh[0]);
+    heightController = TextEditingController(text: wxh[1]);
+    storageController =
+        TextEditingController(text: widget.productDetail.Storage);
+    noteController = TextEditingController(text: widget.productDetail.Note);
+    recommendController =
+        TextEditingController(text: widget.productDetail.Recommend);
+    numController = TextEditingController(text: widget.productDetail.Num);
+    num = TextEditingController(text: numitem.toString());
     super.initState();
   }
 
@@ -79,11 +122,22 @@ class StorageDetailStatus extends State<StorageDetail> {
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width*0.01,0,MediaQuery.of(context).size.width*0.01,0),
+              padding: EdgeInsets.fromLTRB(
+                  MediaQuery.of(context).size.width * 0.01,
+                  0,
+                  MediaQuery.of(context).size.width * 0.01,
+                  0),
               color: Color.fromRGBO(42, 64, 87, 5),
               height: MediaQuery.of(context).size.height * 0.08,
               child: Row(
-                children: [BackButton(color: Colors.white,), AddProductText()],
+                children: [
+                  BackButton(
+                    color: Colors.white,
+                  ),
+                  AddProductText(
+                    title: widget.productDetail.Name,
+                  )
+                ],
               ),
             ),
             Flexible(
@@ -111,21 +165,23 @@ class StorageDetailStatus extends State<StorageDetail> {
                     ),
                     SpaceHeight(),
                     Container(
-                        child:Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            LargeImageBox(
-                                content: Image.network('http://128.199.110.176:8080/upload/img/8images.jpeg')),
-                            SpaceWidth(),
-                            TwoImageBox(
-                                contact: Image.network('http://128.199.110.176:8080/upload/img/8images.jpeg')),
-                            SpaceWidth(),
-                            TwoImageBox(
-                                contact: Image.network('http://128.199.110.176:8080/upload/img/8images.jpeg')),
-                          ],
-                        )
-                    ),
+                        child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        LargeImageBox(
+                            content:
+                                Image.network(widget.productDetail.UrlImage1)),
+                        SpaceWidth(),
+                        TwoImageBox(
+                            contact:
+                                Image.network(widget.productDetail.UrlImage1)),
+                        SpaceWidth(),
+                        TwoImageBox(
+                            contact:
+                                Image.network(widget.productDetail.UrlImage1)),
+                      ],
+                    )),
                     SpaceHeight(),
                     Container(
                       child: Text(
@@ -138,29 +194,23 @@ class StorageDetailStatus extends State<StorageDetail> {
                     Container(
                       decoration: BoxDecoration(
                           border:
-                          Border.all(color: Color.fromRGBO(32, 50, 50, 10)),
+                              Border.all(color: Color.fromRGBO(32, 50, 50, 10)),
                           borderRadius: BorderRadius.circular(8)),
                       child: Column(
                         children: [
                           SpaceHeight(),
                           SpaceHeight(),
                           ProductNameTextField(
-                            enable: true,
-                            value: 'ข้าวทดสอบ',
                             myNode: nameNode,
                             nextNode: priceNode,
                             name: nameController,
                           ),
                           PriceTextField(
-                            enable: true,
-                            value: '10000',
                             myNode: priceNode,
                             nextNode: weightNode,
                             price: priceController,
                           ),
                           WeightTextField(
-                            enable: true,
-                            value: '10',
                             myNode: weightNode,
                             nextNode: widthNode,
                             weight: weightController,
@@ -169,9 +219,6 @@ class StorageDetailStatus extends State<StorageDetail> {
                           SizePacketText(),
                           SpaceText(),
                           SizePacketTextField(
-                            enable: true,
-                            value1: '10',
-                            value2:'20',
                             width: widthController,
                             height: heightController,
                             my1Node: widthNode,
@@ -182,44 +229,61 @@ class StorageDetailStatus extends State<StorageDetail> {
                           IncressProductText(),
                           SpaceText(),
                           IncressProductTextField(
-                            value: '200',
                             myNode: numNode,
                             nextNode: dateStartNode,
                             num: numController,
                           ),
-                          ProductionDateTextField(
-                              myNode: dateStartNode,
-                              dateselect: (){},
-                              dateshow: '20-20-20'),
                           PlaceTextField(
-                            value: '- ข้าว',
                             myNode: storageNode,
                             nextNode: recommendNode,
                             storage: storageController,
                           ),
                           RecommendTextField(
-                            value: ' อื่นๆ',
                             myNode: recommendNode,
                             nextNode: noteNode,
                             recommend: recommendController,
                           ),
                           NoteTextField(
-                            value: ' อื่นๆ',
                             myNode: noteNode,
                             nextNode: saveNode,
                             note: noteController,
                           ),
-                          SaveBUTTON(myNode: saveNode,)
+                          Row(
+                            children: [
+                              IconButton(
+                                  icon: Icon(Icons.add),
+                                  onPressed: () => addCount()),
+                              Flexible(
+                                  child: TextFormField(
+                                controller: num,
+                                onEditingComplete: () => commitCount(),
+                              )),
+                              IconButton(
+                                  icon: Icon(Icons.remove),
+                                  onPressed: () => negativeCount()),
+                              TextButton(
+                                  onPressed: () => addOrder(
+                                      context,
+                                      widget.productDetail.ID,
+                                      widget.productDetail.Name,
+                                      numitem.toString(),
+                                      widget.productDetail.Price,
+                                      widget.productDetail.UrlImage1,
+
+                                  ),
+                                  child: Text('Enter'))
+                            ],
+                          )
                         ],
                       ),
                     ),
                   ],
                 ),
-              ]),)
+              ]),
+            )
           ],
         ),
       ),
     );
   }
 }
-

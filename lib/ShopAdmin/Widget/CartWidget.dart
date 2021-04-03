@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:thung_khao_rbac/Configuration.dart';
+import 'package:thung_khao_rbac/Connect/BackEnd/Bill.dart';
 class AcessToStatus extends StatelessWidget {
   final String TextStatusINButton;
   const AcessToStatus({
@@ -155,13 +156,17 @@ class BacksButton extends StatelessWidget {
   }
 }
 
-class ProductItem extends StatelessWidget {
+    class ProductItem extends StatelessWidget {
+  final Bill bill;
   const ProductItem({
-    Key key,
+    Key key, this.bill,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    double price = double.parse(bill.price);
+    double num = double.parse(bill.num);
+    double sum = price*num;
     return Card(
       child: Container(
         height:
@@ -174,6 +179,7 @@ class ProductItem extends StatelessWidget {
             Card(
               shape: CircleBorder(),
               child: Container(
+                child: Image.network(bill.imageURL),
                 height: MediaQuery.of(
                     context)
                     .size
@@ -203,7 +209,7 @@ class ProductItem extends StatelessWidget {
                   NameText(),
                   DateAndTime(
                     DateANDTimeFont:
-                    'ราคา 1235   จำนวน  12 ถุง',
+                    'ราคา ${bill.price}   จำนวน  ${bill.num} ถุง',
                   ),
                 ],
               ),
@@ -212,7 +218,7 @@ class ProductItem extends StatelessWidget {
               alignment: Alignment
                   .centerRight,
               child: Text(
-                'ราคารวม \n 1,235 ',
+                'ราคารวม \n ${sum.toString()} ',
                 style: TextStyle(
                     color:
                     Colors.red,

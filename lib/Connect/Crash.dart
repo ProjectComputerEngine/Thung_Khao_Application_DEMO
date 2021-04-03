@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:thung_khao_rbac/Connect/BackEnd/Bill.dart';
 import 'package:thung_khao_rbac/Connect/Module/Message.dart';
 import './Module/Product.dart';
 import './Module/Order.dart';
@@ -145,16 +146,16 @@ class DatabaseOrder {
     return db;
   }
 
-  addOrder(Order order) async {
+  addOrder(Bill bill) async {
     var db = await this.openDatabase();
     var store = intMapStoreFactory.store("Order");
-    var keyID = store.add(db, {
-      'Status': order.Status,
-      'Name': order.Name,
-      'ImageURL': order.Image_URL,
-      'Time': order.Date,
-      'ID': order.ID,
-    });
+      var keyID = store.add(db, {
+        "id": bill.id,
+        "name": bill.name,
+        "num": bill.num,
+        "price": bill.price,
+        "imageURL":bill.imageURL
+      });
     db.close();
   }
 
@@ -162,17 +163,17 @@ class DatabaseOrder {
     var db = await this.openDatabase();
     var store = intMapStoreFactory.store("Order");
     var snapshot = await store.find(db);
-    List order = List<Order>();
+    List bill = List<Bill>();
     for (var record in snapshot) {
-      order.add(Order(
-        ID: record['ID'],
-        Name: record['Name'],
-        Status: record['Status'],
-        Image_URL: record['Image_URL'],
-        Date: record['Date'],
+      bill.add(Bill(
+        id: record['id'],
+        name: record['name'],
+        num: record['num'],
+        price: record['price'],
+        imageURL: record['imageURL']
       ));
     }
-    return order;
+    return bill;
   }
 
   Future clearData() async {

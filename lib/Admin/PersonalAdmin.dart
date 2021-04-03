@@ -57,16 +57,6 @@ class PersonalState extends State<PersonalAdminMain> {
                           height: MediaQuery.of(context).size.height * 1,
                           child: Column(children: [
                             Container(
-                              height: MediaQuery.of(context).size.height * 0.1,
-                              child: Row(
-                                children: [
-                                  BackButton(
-                                    color: Colors.white,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
                                 height:
                                     MediaQuery.of(context).size.height * 0.08),
                             Container(
@@ -107,7 +97,7 @@ class PersonalState extends State<PersonalAdminMain> {
                             ),
                             ClickButton(
                               TextButton: ('แก้ไขโปรไฟล์'),
-                              event: () => Navigator.push(
+                              event: () => Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>

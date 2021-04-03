@@ -135,17 +135,17 @@ class ShopMainState extends State<ShopMain> {
                             ),
                             PlaceText(
                               TextPLACE:
-                                  '-------------------------------------------------------------------------------',
+                                  snapshot.data.Address,
                             ),
                             Container(
                               height: MediaQuery.of(context).size.height * 0.12,
                             ),
                             ClickButton(
-                              event: () => Navigator.push(
+                              event: () => Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          UpdatePersonalShop())),
+                                          UpdatePersonalShop( shop: snapshot.data))),
                               TextButton: ('แก้ไขโปรไฟล์'),
                             ),
                             ClickButton(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thung_khao_rbac/Admin/PersonalAdmin.dart';
 import 'package:thung_khao_rbac/Configuration.dart';
 import 'package:thung_khao_rbac/Admin/UpdatePresonalAdmin.dart';
 
@@ -161,42 +162,6 @@ class PictureProfile extends StatelessWidget {
   }
 }
 
-class NavigationButton extends StatelessWidget {
-  final String BarText;
-  final Icon BarIcon;
-
-  const NavigationButton({
-    Key key,
-    this.BarIcon,
-    this.BarText,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: ShapeDecoration(shape: CircleBorder()),
-      child: FlatButton(
-        onPressed: () => {},
-        child: Column(
-          children: [
-            Container(
-              height: MediaQuery.of(context).size.height * 0.01,
-            ),
-            BarIcon,
-            Container(
-              height: MediaQuery.of(context).size.height * 0.01,
-            ),
-            Text(
-              BarText,
-              style: TextStyle(fontSize: 8),
-            )
-          ],
-        ),
-        minWidth: MediaQuery.of(context).size.width * 0,
-      ),
-    );
-  }
-}
 
 class BackButtons extends StatelessWidget {
   const BackButtons({
@@ -214,4 +179,93 @@ class BackButtons extends StatelessWidget {
           color: Colors.white,
         ));
   }
+}
+
+// ------------------     dialog        -----------------------
+Future<void> showMyDialog(BuildContext context,String dialogMessage) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('ถุงข้าว'),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              Text(dialogMessage),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text('ยืนยัน'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+// ------------------     dialog        -----------------------
+Future<void> showMyDialogY(BuildContext context,String dialogMessage) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('ถุงข้าว'),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              Text(dialogMessage),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text('ยืนยัน'),
+            onPressed: () {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>PersonalAdminMain()));
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
+// ------------------     dialog        -----------------------
+Future<void> showMyDialogYN(BuildContext context,String dialogMessage) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('ถุงข้าว'),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              Text(dialogMessage),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text('ยืนยัน'),
+            onPressed: () {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> PersonalAdminMain()));
+            },
+          ),
+          TextButton(
+            child: Text('ยกเลิก'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }

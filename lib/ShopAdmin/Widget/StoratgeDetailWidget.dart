@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:thung_khao_rbac/Configuration.dart';
+import 'package:thung_khao_rbac/ShopAdmin/Cart.dart';
 class SaveBUTTON extends StatelessWidget {
   final Function save;
-  final FocusNode myNode;
   const SaveBUTTON({
-    Key key, this.save, this.myNode,
+    Key key, this.save,
   }) : super(key: key);
 
   @override
@@ -18,7 +18,6 @@ class SaveBUTTON extends StatelessWidget {
         // width: MediaQuery.of(context).size.width * 0.2,
         height: MediaQuery.of(context).size.width * 0.1,
         child: FlatButton(
-            focusNode:  myNode,
             onPressed: save,
             child: Text(
               'บันทึก',
@@ -99,6 +98,7 @@ class NoteTextField extends StatelessWidget {
                 maxLines: 4,
                 textAlign: TextAlign.start,
                 cursorColor: Colors.grey,
+                enabled: false,
                 decoration: InputDecoration(
                   labelText: value,
                   border: InputBorder.none,
@@ -153,6 +153,7 @@ class RecommendTextField extends StatelessWidget {
                   }
                   return null;
                 },
+                enabled: false,
                 focusNode: myNode,
                 onEditingComplete: (){nextNode.requestFocus();},
                 controller: recommend,
@@ -212,6 +213,7 @@ class PlaceTextField extends StatelessWidget {
                   }
                   return null;
                 },
+                enabled: false,
                 focusNode: myNode,
                 onEditingComplete: (){nextNode.requestFocus();},
                 controller: storage,
@@ -418,7 +420,7 @@ class SizePacketTextField extends StatelessWidget {
                 onEditingComplete: (){my2Node.requestFocus();},
                 textAlign: TextAlign.center,
                 cursorColor: Colors.grey,
-                enabled: enable== null ? false:true,
+                enabled: enable== false,
                 decoration: InputDecoration(
                   labelText: value1,
                   border: InputBorder.none,
@@ -455,6 +457,7 @@ class SizePacketTextField extends StatelessWidget {
                 textAlign: TextAlign.center,
                 cursorColor: Colors.grey,
                 focusNode: my2Node,
+                enabled: false,
                 onEditingComplete: (){nextNode.requestFocus();},
                 decoration: InputDecoration(
                   labelText: value2,
@@ -618,10 +621,9 @@ class ProductNameTextField extends StatelessWidget {
   final FocusNode myNode;
   final String error;
   final FocusNode nextNode;
-  final String value;
   final bool enable;
   const ProductNameTextField({
-    Key key, this.name, this.myNode, this.nextNode, this.error, this.value, this.enable,
+    Key key, this.name, this.myNode, this.nextNode, this.error, this.enable,
   }) : super(key: key);
 
   @override
@@ -630,15 +632,11 @@ class ProductNameTextField extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            padding: EdgeInsets.fromLTRB(
-                MediaQuery.of(context).size.width * 0.05,
-                0,
-                MediaQuery.of(context).size.width * 0.01,
-                0),
+            // padding: EdgeInsets.symmetric(horizontal: 10),
           ),
           Card(
             child: Container(
-              width: MediaQuery.of(context).size.width * 0.6,
+              width: MediaQuery.of(context).size.width * 0.7,
               child: TextFormField(
                 validator: (str){
                   if (str.isEmpty){
@@ -653,7 +651,6 @@ class ProductNameTextField extends StatelessWidget {
                 textAlign: TextAlign.center,
                 cursorColor: Colors.grey,
                 decoration: InputDecoration(
-                  labelText: value,
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.symmetric(vertical: 0),
                   hintText: ('ชื่อข้าว'),
@@ -744,8 +741,9 @@ class LargeImageBox extends StatelessWidget {
 }
 
 class AddProductText extends StatelessWidget {
+  final String title;
   const AddProductText({
-    Key key,
+    Key key, this.title,
   }) : super(key: key);
 
   @override
@@ -753,8 +751,8 @@ class AddProductText extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width * 0.4,
       child: Text(
-        'เพิ่มสินค้าใหม่',
-        style: TextStyle(color: Colors.white),
+        title,
+        style: TextStyle(color: Colors.white,fontSize: Config.StorageMain_fontH),
       ),
     );
   }
@@ -804,3 +802,65 @@ Future<void> showMyDialog(BuildContext context,String dialogMessage) async {
     },
   );
 }
+// ------------------     dialog        -----------------------
+Future<void> showMyDialogY(BuildContext context,String dialogMessage) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('ถุงข้าว'),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              Text(dialogMessage),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text('ยืนยัน'),
+            onPressed: () {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>Cart()));
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
+// ------------------     dialog        -----------------------
+Future<void> showMyDialogYN(BuildContext context,String dialogMessage) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('ถุงข้าว'),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              Text(dialogMessage),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text('ยืนยัน'),
+            onPressed: () {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> Cart()));
+            },
+          ),
+          TextButton(
+            child: Text('ยกเลิก'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+

@@ -3,10 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:thung_khao_rbac/Connect/BackEnd/Login.dart';
-import 'package:thung_khao_rbac/Connect/Connection.dart';
 import 'package:provider/provider.dart';
-import 'package:thung_khao_rbac/Connect/Module/Admin.dart';
-import '../Widget/UpdatePersonalAdminWidget.dart';
+import 'package:thung_khao_rbac/Connect/Module/ShopAdmin.dart';
+import 'package:thung_khao_rbac/ShopAdmin/Widget/UpdatePersonalShopWidget.dart';
 
 Future<void> ReadFildPath(StreamController streamController) async {
   FilePickerResult result = await FilePicker.platform
@@ -18,24 +17,34 @@ Future<void> ReadFildPath(StreamController streamController) async {
   } else {}
 }
 
-Future<void> UpdatePersonalAdmin(BuildContext context, String name, String tel,
-    String address, String pathImage, String id,Admin admin) async {
-  if(admin.Image_URL==pathImage && admin.Name == name && admin.Tel == tel && admin.Address == address){
-    showMyDialog(
-        context, 'กรุณาใส่ข้อมูลใหม่');
-  }else {
+Future<void> UpdatePersonalShopData(
+    BuildContext context,
+    String shopName,
+    String shopOwner,
+    String tel,
+    String GPS,
+    String email,
+    String address,
+    String pathImage,
+    String id,
+    Shop shop) async {
+  if (shop.Name_Shop == shopName &&
+      shop.Name_Owner == shopOwner &&
+      shop.Tel == tel &&
+      shop.GPS == GPS &&
+      shop.Email == email &&
+      shop.Image_URL == pathImage) {
+    showMyDialog(context, 'กรุณาใส่ข้อมูลใหม่');
+  } else {
     bool complete = await Provider.of<LoginConnection>(context, listen: false)
-        .updateAdminDataPathImage(name, tel, address, pathImage, id);
+        .updateShopDataPathImage(shopName,shopOwner,tel,email,GPS,address,pathImage,id);
     if (complete) {
       showMyDialogY(context, 'อัพเดทข้อมูลส่วนตัวสำเร็จ');
       print('complete');
-    }
-    else {
-      showMyDialog(
+    } else {
+      showMyDialogY(
           context, 'เกิดข้อผิดพลาดทางเครือข่าย \n กรุณาลองใหม่อีกครั้ง');
       print('Error');
     }
   }
-
 }
-

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thung_khao_rbac/Admin/StorageMain.dart';
 class SaveBUTTON extends StatelessWidget {
   final Function save;
   final FocusNode myNode;
@@ -823,6 +824,33 @@ Future<void> showMyDialog(BuildContext context,String dialogMessage) async {
             child: Text('ยืนยัน'),
             onPressed: () {
               Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+// ------------------     dialog        -----------------------
+Future<void> showMyDialogY(BuildContext context,String dialogMessage) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('ถุงข้าว'),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              Text(dialogMessage),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text('ยืนยัน'),
+            onPressed: () {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>StorageMain()));
             },
           ),
         ],

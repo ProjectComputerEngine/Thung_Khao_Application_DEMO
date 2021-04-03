@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:thung_khao_rbac/Configuration.dart';
+
+import '../StorageMain.dart';
 class SaveBUTTON extends StatelessWidget {
   final Function save;
   final FocusNode myNode;
@@ -22,6 +24,32 @@ class SaveBUTTON extends StatelessWidget {
             onPressed: save,
             child: Text(
               'บันทึก',
+              style: TextStyle(color: Colors.white),
+            )),
+      ),
+    );
+  }
+}
+class DelectBUTTON extends StatelessWidget {
+  final Function save;
+  const DelectBUTTON({
+    Key key, this.save,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Container(
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            color: Colors.red,
+            borderRadius: BorderRadius.circular(4)),
+        // width: MediaQuery.of(context).size.width * 0.2,
+        height: MediaQuery.of(context).size.width * 0.1,
+        child: FlatButton(
+            onPressed: save,
+            child: Text(
+              'ลบสินค้า',
               style: TextStyle(color: Colors.white),
             )),
       ),
@@ -60,12 +88,10 @@ class SizePacketText extends StatelessWidget {
 
 class NoteTextField extends StatelessWidget {
   final TextEditingController note;
-  final FocusNode myNode;
-  final FocusNode nextNode;
   final String error;
   final String value;
   const NoteTextField({
-    Key key, this.note, this.myNode, this.nextNode, this.error, this.value,
+    Key key, this.note, this.error, this.value,
   }) : super(key: key);
 
   @override
@@ -93,8 +119,6 @@ class NoteTextField extends StatelessWidget {
                   }
                   return null;
                 },
-                focusNode: myNode,
-                onEditingComplete: (){nextNode.requestFocus();},
                 controller: note,
                 maxLines: 4,
                 textAlign: TextAlign.start,
@@ -120,12 +144,10 @@ class NoteTextField extends StatelessWidget {
 
 class RecommendTextField extends StatelessWidget {
   final TextEditingController recommend;
-  final FocusNode myNode;
-  final FocusNode nextNode;
   final String error;
   final String value;
   const RecommendTextField({
-    Key key, this.recommend, this.myNode, this.nextNode, this.error, this.value,
+    Key key, this.recommend, this.error, this.value,
   }) : super(key: key);
 
   @override
@@ -153,8 +175,6 @@ class RecommendTextField extends StatelessWidget {
                   }
                   return null;
                 },
-                focusNode: myNode,
-                onEditingComplete: (){nextNode.requestFocus();},
                 controller: recommend,
                 maxLines: 4,
                 textAlign: TextAlign.start,
@@ -180,12 +200,10 @@ class RecommendTextField extends StatelessWidget {
 
 class PlaceTextField extends StatelessWidget {
   final TextEditingController storage;
-  final FocusNode myNode;
-  final FocusNode nextNode;
   final String error;
   final String value;
   const PlaceTextField({
-    Key key, this.storage, this.myNode, this.nextNode, this.error, this.value,
+    Key key, this.storage, this.error, this.value,
   }) : super(key: key);
 
   @override
@@ -212,8 +230,6 @@ class PlaceTextField extends StatelessWidget {
                   }
                   return null;
                 },
-                focusNode: myNode,
-                onEditingComplete: (){nextNode.requestFocus();},
                 controller: storage,
                 keyboardType: TextInputType.multiline,
                 textAlign: TextAlign.start,
@@ -240,10 +256,9 @@ class PlaceTextField extends StatelessWidget {
 class ProductionDateTextField extends StatelessWidget {
   final Function dateselect;
   final String dateshow;
-  final FocusNode myNode;
   final String error;
   const ProductionDateTextField({
-    Key key, this.dateselect, this.dateshow, this.myNode, this.error,
+    Key key, this.dateselect, this.dateshow, this.error,
   }) : super(key: key);
 
 
@@ -287,7 +302,7 @@ class ProductionDateTextField extends StatelessWidget {
               ),
             ),
           ),
-          Container(child: IconButton(icon: Icon(Icons.calendar_today),onPressed:dateselect,focusNode: myNode,),)
+          Container(child: IconButton(icon: Icon(Icons.calendar_today),onPressed:dateselect,),)
         ],
       ),
     );
@@ -296,13 +311,11 @@ class ProductionDateTextField extends StatelessWidget {
 
 class IncressProductTextField extends StatelessWidget {
   final TextEditingController num;
-  final FocusNode myNode;
-  final FocusNode nextNode;
   final String error;
   final String value;
   final bool enable;
   const IncressProductTextField({
-    Key key, this.num, this.myNode, this.nextNode, this.error, this.value, this.enable,
+    Key key, this.num,this.error, this.value, this.enable,
   }) : super(key: key);
 
   @override
@@ -332,8 +345,6 @@ class IncressProductTextField extends StatelessWidget {
                 },
                 enabled: enable== null ? false:true,
                 controller: num,
-                focusNode: myNode,
-                onEditingComplete: (){nextNode.requestFocus();},
                 textAlign: TextAlign.center,
                 cursorColor: Colors.grey,
                 decoration: InputDecoration(
@@ -379,15 +390,12 @@ class IncressProductText extends StatelessWidget {
 class SizePacketTextField extends StatelessWidget {
   final TextEditingController width;
   final TextEditingController height;
-  final FocusNode my2Node;
-  final FocusNode my1Node;
-  final FocusNode nextNode;
   final String error;
   final String value1;
   final String value2;
   final bool enable;
   const SizePacketTextField({
-    Key key, this.width, this.height, this.my2Node, this.nextNode, this.my1Node, this.error, this.value1, this.value2, this.enable,
+    Key key, this.width, this.height, this.error, this.value1, this.value2, this.enable,
   }) : super(key: key);
 
   @override
@@ -414,8 +422,6 @@ class SizePacketTextField extends StatelessWidget {
                   return null;
                 },
                 controller: width,
-                focusNode: my1Node,
-                onEditingComplete: (){my2Node.requestFocus();},
                 textAlign: TextAlign.center,
                 cursorColor: Colors.grey,
                 enabled: enable== null ? false:true,
@@ -454,8 +460,6 @@ class SizePacketTextField extends StatelessWidget {
                 controller: height,
                 textAlign: TextAlign.center,
                 cursorColor: Colors.grey,
-                focusNode: my2Node,
-                onEditingComplete: (){nextNode.requestFocus();},
                 decoration: InputDecoration(
                   labelText: value2,
                   border: InputBorder.none,
@@ -482,13 +486,11 @@ class SizePacketTextField extends StatelessWidget {
 
 class WeightTextField extends StatelessWidget {
   final TextEditingController weight;
-  final FocusNode myNode;
-  final FocusNode nextNode;
   final String error;
   final String value;
   final bool enable;
   const WeightTextField({
-    Key key, this.weight, this.myNode, this.nextNode, this.error, this.value, this.enable,
+    Key key, this.weight,this.error, this.value, this.enable,
   }) : super(key: key);
 
   @override
@@ -517,9 +519,7 @@ class WeightTextField extends StatelessWidget {
                   return null;
                 },
                 enabled: enable== null ? false:true,
-                focusNode: myNode,
                 keyboardType: TextInputType.number,
-                onEditingComplete: (){nextNode.requestFocus();},
                 controller: weight,
                 textAlign: TextAlign.center,
                 cursorColor: Colors.grey,
@@ -549,13 +549,11 @@ class WeightTextField extends StatelessWidget {
 
 class PriceTextField extends StatelessWidget {
   final TextEditingController price;
-  final FocusNode myNode;
-  final FocusNode nextNode;
   final String error;
   final String value;
   final bool enable;
   const PriceTextField({
-    Key key, this.price, this.myNode, this.nextNode, this.error, this.value, this.enable,
+    Key key, this.price, this.error, this.value, this.enable,
   }) : super(key: key);
 
   @override
@@ -584,9 +582,7 @@ class PriceTextField extends StatelessWidget {
                 },
                 enabled: enable== null ? false:true,
                 controller: price,
-                focusNode: myNode,
                 keyboardType: TextInputType.number,
-                onEditingComplete: (){nextNode.requestFocus();},
                 textAlign: TextAlign.center,
                 cursorColor: Colors.grey,
                 decoration: InputDecoration(
@@ -615,13 +611,11 @@ class PriceTextField extends StatelessWidget {
 
 class ProductNameTextField extends StatelessWidget {
   final TextEditingController name;
-  final FocusNode myNode;
   final String error;
-  final FocusNode nextNode;
   final String value;
   final bool enable;
   const ProductNameTextField({
-    Key key, this.name, this.myNode, this.nextNode, this.error, this.value, this.enable,
+    Key key, this.name,this.error, this.value, this.enable,
   }) : super(key: key);
 
   @override
@@ -647,8 +641,6 @@ class ProductNameTextField extends StatelessWidget {
                   return null;
                 },
                 enabled: enable== null ? false:true,
-                focusNode: myNode,
-                onEditingComplete: (){nextNode.requestFocus();},
                 controller: name,
                 textAlign: TextAlign.center,
                 cursorColor: Colors.grey,
@@ -744,8 +736,9 @@ class LargeImageBox extends StatelessWidget {
 }
 
 class AddProductText extends StatelessWidget {
+  final String title;
   const AddProductText({
-    Key key,
+    Key key, this.title,
   }) : super(key: key);
 
   @override
@@ -753,7 +746,7 @@ class AddProductText extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width * 0.4,
       child: Text(
-        'เพิ่มสินค้าใหม่',
+        title,
         style: TextStyle(color: Colors.white),
       ),
     );
@@ -797,6 +790,33 @@ Future<void> showMyDialog(BuildContext context,String dialogMessage) async {
             child: Text('ยืนยัน'),
             onPressed: () {
               Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+// ------------------     dialog        -----------------------
+Future<void> showMyDialogY(BuildContext context,String dialogMessage) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('ถุงข้าว'),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              Text(dialogMessage),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text('ยืนยัน'),
+            onPressed: () {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>StorageMain()));
             },
           ),
         ],

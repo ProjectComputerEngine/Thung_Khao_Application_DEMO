@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:thung_khao_rbac/Admin/AddProduct.dart';
 import 'package:thung_khao_rbac/Admin/AdminMain.dart';
+import 'package:thung_khao_rbac/Admin/PersonalAdmin.dart';
 import 'package:thung_khao_rbac/Admin/StorageDetail.dart';
 import 'package:thung_khao_rbac/Admin/Widget/BottonNavigationBarAdminWidget.dart';
 import 'package:thung_khao_rbac/Configuration.dart';
@@ -25,6 +26,7 @@ class StorageStatus extends State<StorageMain> {
 
   @override
   void dispose() {
+    print('Dispose Complete Storage Main');
     super.dispose();
   }
 
@@ -32,7 +34,7 @@ class StorageStatus extends State<StorageMain> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () => Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => AdminMain())),
+          context, MaterialPageRoute(builder: (context) => PersonalAdminMain())),
       child: Scaffold(
           bottomNavigationBar: Container(
             height: MediaQuery.of(context).size.height * 0.08,
@@ -135,7 +137,7 @@ class StorageStatus extends State<StorageMain> {
                           child: Text('เกิดข้อผิดพลาดทางเครือข่าย',style: TextStyle(fontSize:Config.Error_fontH)),
                         );
                       } else {
-                        return CircularProgressIndicator();
+                        return Center(child: CircularProgressIndicator());
                       }
                     },
                   )),

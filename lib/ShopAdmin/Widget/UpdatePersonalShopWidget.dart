@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:thung_khao_rbac/Configuration.dart';
 import 'package:thung_khao_rbac/Admin/UpdatePresonalAdmin.dart';
+import 'package:thung_khao_rbac/ShopAdmin/ShopMain.dart';
 
 class PlaceText extends StatelessWidget {
   final String TextPLACE;
@@ -214,4 +215,93 @@ class BackButtons extends StatelessWidget {
           color: Colors.white,
         ));
   }
+}
+// ------------------     dialog        -----------------------
+Future<void> showMyDialog(BuildContext context,String dialogMessage) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('ถุงข้าว'),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              Text(dialogMessage),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text('ยืนยัน'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
+// ------------------     dialog        -----------------------
+Future<void> showMyDialogY(BuildContext context,String dialogMessage) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('ถุงข้าว'),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              Text(dialogMessage),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text('ยืนยัน'),
+            onPressed: () {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>ShopMain()));
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
+// ------------------     dialog        -----------------------
+Future<void> showMyDialogYN(BuildContext context,String dialogMessage) async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('ถุงข้าว'),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              Text(dialogMessage),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text('ยืนยัน'),
+            onPressed: () {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> ShopMain()));
+            },
+          ),
+          TextButton(
+            child: Text('ยกเลิก'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }

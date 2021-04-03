@@ -1,11 +1,18 @@
 import 'dart:async';
+import 'package:thung_khao_rbac/Connect/BackEnd/Product.dart';
 import 'package:thung_khao_rbac/Connect/Module/Product.dart';
 
 import './Widget/StorageDetailWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:thung_khao_rbac/Admin/Widget/BottonNavigationBarAdminWidget.dart';
+import './Backend/StorageDetailBackend.dart';
+
+import 'package:intl/intl.dart';
+import 'package:rxdart/subjects.dart';
+import 'package:provider/provider.dart';
+
 class StorageDetail extends StatefulWidget {
-final Product productDetail;
+  final Product productDetail;
 
   const StorageDetail({Key key, this.productDetail}) : super(key: key);
 
@@ -16,68 +23,58 @@ final Product productDetail;
 }
 
 class StorageDetailStatus extends State<StorageDetail> {
-
-  TextEditingController nameController = TextEditingController();
-  TextEditingController priceController = TextEditingController();
-  TextEditingController weightController = TextEditingController();
-  TextEditingController widthController = TextEditingController();
-  TextEditingController heightController = TextEditingController();
+  TextEditingController nameController;
+  TextEditingController priceController;
+  TextEditingController weightController;
+  TextEditingController widthController;
+  TextEditingController heightController;
 
   // TextEditingController dateStartController = TextEditingController();
-  TextEditingController storageController = TextEditingController();
-  TextEditingController noteController = TextEditingController();
-  TextEditingController recommendController = TextEditingController();
-  TextEditingController numController = TextEditingController();
+  TextEditingController storageController;
+  TextEditingController noteController;
+  TextEditingController recommendController;
+  TextEditingController numController;
 
-  FocusNode nameNode;
-  FocusNode priceNode;
-  FocusNode weightNode;
-  FocusNode widthNode;
-  FocusNode heightNode;
-  FocusNode numNode;
-  FocusNode dateStartNode;
-  FocusNode storageNode;
-  FocusNode recommendNode;
-  FocusNode noteNode;
-  FocusNode saveNode;
 
   DateTime startDate;
   DateTime selectDate;
 
-  // BehaviorSubject streamController;
+  BehaviorSubject streamController;
 
   List<String> wxh;
 
-
   @override
   void initState() {
-    // streamController = BehaviorSubject();
-    // wxh = widget.productDetail.Size.split('x');
+    streamController = BehaviorSubject();
+    wxh = widget.productDetail.Size.split('X');
     startDate = DateTime.now();
 
-    nameNode = FocusNode();
-    priceNode = FocusNode();
-    weightNode = FocusNode();
-    widthNode = FocusNode();
-    heightNode = FocusNode();
-    numNode = FocusNode();
-    dateStartNode = FocusNode();
-    storageNode = FocusNode();
-    recommendNode = FocusNode();
-    noteNode = FocusNode();
-    saveNode = FocusNode();
+    nameController = TextEditingController(text: widget.productDetail.Name);
+    priceController = TextEditingController(text: widget.productDetail.Price);
+    priceController = TextEditingController(text: widget.productDetail.Price);
+    weightController = TextEditingController(text: widget.productDetail.Weight);
+    widthController = TextEditingController(text: wxh[0]);
+    heightController = TextEditingController(text: wxh[1]);
+    storageController  = TextEditingController(text: widget.productDetail.Storage);
+    noteController  = TextEditingController(text: widget.productDetail.Note);
+    recommendController  = TextEditingController(text: widget.productDetail.Recommend);
+    recommendController  = TextEditingController(text: widget.productDetail.Recommend);
+    numController  = TextEditingController(text: widget.productDetail.Num);
+
+
+
+
     super.initState();
   }
-  _selectDate(BuildContext context, FocusNode nextNode) async {
+
+  _selectDate(BuildContext context) async {
     selectDate = await showDatePicker(
       context: context,
       initialDate: startDate, // Refer step 1
       firstDate: DateTime(startDate.year - 5),
       lastDate: DateTime(startDate.year + 5),
     );
-    if (selectDate != null) {
-      nextNode.requestFocus();
-    }
+    if (selectDate != null) {}
     setState(() {});
   }
 
@@ -97,11 +94,22 @@ class StorageDetailStatus extends State<StorageDetail> {
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width*0.01,0,MediaQuery.of(context).size.width*0.01,0),
+              padding: EdgeInsets.fromLTRB(
+                  MediaQuery.of(context).size.width * 0.01,
+                  0,
+                  MediaQuery.of(context).size.width * 0.01,
+                  0),
               color: Color.fromRGBO(42, 64, 87, 5),
               height: MediaQuery.of(context).size.height * 0.08,
               child: Row(
-                children: [BackButton(color: Colors.white,), AddProductText()],
+                children: [
+                  BackButton(
+                    color: Colors.white,
+                  ),
+                  AddProductText(
+                    title: widget.productDetail.Name,
+                  )
+                ],
               ),
             ),
             Flexible(
@@ -113,131 +121,141 @@ class StorageDetailStatus extends State<StorageDetail> {
                         fit: BoxFit.cover),
                   ),
                 ),
-                ListView(
-                  padding: EdgeInsets.fromLTRB(
-                      MediaQuery.of(context).size.width * 0.05,
-                      0,
-                      MediaQuery.of(context).size.width * 0.05,
-                      0),
-                  children: [
-                    Container(
-                      child: Text(
-                        'รูป',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(),
-                      ),
-                    ),
-                    SpaceHeight(),
-                    Container(
-                        child:Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            LargeImageBox(
-                                content: Image.network(widget.productDetail.UrlImage1)),
-                            SpaceWidth(),
-                            TwoImageBox(
-                                contact: Image.network(widget.productDetail.UrlImage1)),
-                            SpaceWidth(),
-                            TwoImageBox(
-                                contact: Image.network(widget.productDetail.UrlImage1)),
-                          ],
-                        )
-                    ),
-                    SpaceHeight(),
-                    Container(
-                      child: Text(
-                        'รายละเอียด',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                    ),
-                    SpaceHeight(),
-                    SpaceHeight(),
-                    Container(
-                      decoration: BoxDecoration(
-                          border:
-                          Border.all(color: Color.fromRGBO(32, 50, 50, 10)),
-                          borderRadius: BorderRadius.circular(8)),
-                      child: Column(
+                StreamBuilder(
+                    stream: streamController.stream,
+                    builder: (context, snapshot) {
+                      Widget contant;
+                      if (snapshot.hasData) {
+                        contant = Image.file(snapshot.data);
+                      } else {
+                        contant = Image.network(widget.productDetail.UrlImage1);
+                      }
+                      return ListView(
+                        padding: EdgeInsets.fromLTRB(
+                            MediaQuery.of(context).size.width * 0.05,
+                            0,
+                            MediaQuery.of(context).size.width * 0.05,
+                            0),
                         children: [
+                          Container(
+                            child: Text(
+                              'รูป',
+                              textAlign: TextAlign.left,
+                              style: TextStyle(),
+                            ),
+                          ),
+                          SpaceHeight(),
+                          Container(
+                              child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              LargeImageBox(
+                                  file_picker: () =>
+                                      ReadFildPath(streamController),
+                                  content: contant),
+                              SpaceWidth(),
+                              TwoImageBox(contact: contant),
+                              SpaceWidth(),
+                              TwoImageBox(contact: contant),
+                            ],
+                          )),
+                          SpaceHeight(),
+                          Container(
+                            child: Text(
+                              'รายละเอียด',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ),
                           SpaceHeight(),
                           SpaceHeight(),
-                          ProductNameTextField(
-                            enable: true,
-                            value: widget.productDetail.Name,
-                            myNode: nameNode,
-                            nextNode: priceNode,
-                            name: nameController,
+                          Container(
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: Color.fromRGBO(32, 50, 50, 10)),
+                                borderRadius: BorderRadius.circular(8)),
+                            child: Column(
+                              children: [
+                                SpaceHeight(),
+                                SpaceHeight(),
+                                ProductNameTextField(
+                                  enable: true,
+                                  name: nameController,
+                                ),
+                                PriceTextField(
+                                  enable: true,
+                                  price: priceController,
+                                ),
+                                WeightTextField(
+                                  enable: true,
+                                  weight: weightController,
+                                ),
+                                SpaceText(),
+                                SizePacketText(),
+                                SpaceText(),
+                                SizePacketTextField(
+                                  enable: true,
+                                  width: widthController,
+                                  height: heightController,
+                                ),
+                                SpaceText(),
+                                IncressProductText(),
+                                SpaceText(),
+                                IncressProductTextField(
+                                  num: numController,
+                                ),
+                                ProductionDateTextField(
+                                    dateselect: () =>
+                                        _selectDate(context),
+                                    dateshow: selectDate == null
+                                        ? DateFormat('yyyy-MM-dd')
+                                            .format(DateTime.now())
+                                        : DateFormat('yyyy-MM-dd ')
+                                            .format(selectDate)),
+                                PlaceTextField(
+                                  storage: storageController,
+                                ),
+                                RecommendTextField(
+                                  recommend: recommendController,
+                                ),
+                                NoteTextField(
+                                  note: noteController,
+                                ),
+                                SaveBUTTON(
+                                  save: () => UpdateProduct(
+                                      widget.productDetail.ID,
+                                      nameController.text,
+                                      priceController.text,
+                                      weightController.text,
+                                      widthController.text,
+                                      heightController.text,
+                                      numController.text,
+                                      selectDate == null
+                                          ? DateFormat('yyyy-MM-dd HH:mm:ss')
+                                              .format(DateTime.now())
+                                          : DateFormat('yyyy-MM-dd HH:mm:ss')
+                                              .format(selectDate),
+                                      storageController.text,
+                                      recommendController.text,
+                                      noteController.text,
+                                      snapshot.data == null ? widget.productDetail.UrlImage1:snapshot.data.path,
+                                      context),
+                                ),
+                                DelectBUTTON(
+                                  save: () => DelectProduct(
+                                      context, widget.productDetail.ID),
+                                )
+                              ],
+                            ),
                           ),
-                          PriceTextField(
-                            enable: true,
-                            value: widget.productDetail.Price,
-                            myNode: priceNode,
-                            nextNode: weightNode,
-                            price: priceController,
-                          ),
-                          WeightTextField(
-                            enable: true,
-                            value: widget.productDetail.Weight,
-                            myNode: weightNode,
-                            nextNode: widthNode,
-                            weight: weightController,
-                          ),
-                          SpaceText(),
-                          SizePacketText(),
-                          SpaceText(),
-                          SizePacketTextField(
-                            enable: true,
-                            value1: 'wxh[0]',
-                            value2: 'wxh[1]',
-                            width: widthController,
-                            height: heightController,
-                            my1Node: widthNode,
-                            my2Node: heightNode,
-                            nextNode: numNode,
-                          ),
-                          SpaceText(),
-                          IncressProductText(),
-                          SpaceText(),
-                          IncressProductTextField(
-                            value: widget.productDetail.Num,
-                            myNode: numNode,
-                            nextNode: dateStartNode,
-                            num: numController,
-                          ),
-                          ProductionDateTextField(
-                              myNode: dateStartNode,
-                              dateselect: ()=>_selectDate(context,storageNode),
-                              dateshow: widget.productDetail.DateStart),
-                          PlaceTextField(
-                            value: widget.productDetail.Storage,
-                            myNode: storageNode,
-                            nextNode: recommendNode,
-                            storage: storageController,
-                          ),
-                          RecommendTextField(
-                            value: widget.productDetail.Recommend,
-                            myNode: recommendNode,
-                            nextNode: noteNode,
-                            recommend: recommendController,
-                          ),
-                          NoteTextField(
-                            value: widget.productDetail.Note,
-                            myNode: noteNode,
-                            nextNode: saveNode,
-                            note: noteController,
-                          ),
-                          SaveBUTTON(myNode: saveNode,)
                         ],
-                      ),
-                    ),
-                  ],
-                ),
-              ]),)
+                      );
+                    }),
+              ]),
+            )
           ],
         ),
       ),
     );
   }
 }
-

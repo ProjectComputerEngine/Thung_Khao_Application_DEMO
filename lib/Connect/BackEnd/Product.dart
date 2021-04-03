@@ -6,12 +6,67 @@ import 'package:thung_khao_rbac/Connect/Module/Product.dart';
 class ProductConnection extends Connection {
   List<Product> product = [];
 
-  addProduct(Product newProduct) {
-
+  Future<bool> addProduct(Product newProduct) async {
+    try {
+      String response = await connectionUploadProduct(
+        name: newProduct.Name,
+        price: newProduct.Price,
+        size: newProduct.Size,
+        dateStart: newProduct.DateStart,
+        storage: newProduct.Storage,
+        num: newProduct.Num,
+        weight: newProduct.Weight,
+        recommend: newProduct.Recommend,
+        note: newProduct.Note,
+        filePath: newProduct.UrlImage1,
+      );
+      if (response != 'Error') {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      return false;
+    }
   }
 
-  updateProduct() {
+  Future<bool> updateProduct(Product product) async {
+    try {
+      var response = await connectionUpdateProduct(
+        id: product.ID,
+        filePath: product.UrlImage1,
+        note: product.Note,
+        recommend: product.Recommend,
+        weight: product.Weight,
+        num: product.Num,
+        storage: product.Storage,
+        dateStart: product.DateStart,
+        price: product.Price,
+        name: product.Name,
+        size: product.Size,
+      );
+      if(response == 'OK'){
+        return true;
+      }
+      else{
+        return false;
+      }
+    } catch (error) {
+      return false;
+    }
+  }
 
+  Future<bool> deleteProduct(String id) async {
+    try {
+      var response = await connectionDeleteProduct(id);
+      if (response != null) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      return false;
+    }
   }
 
   Future<bool> showAllProduct() async {
