@@ -4,17 +4,41 @@ import 'package:thung_khao_rbac/Connect/Crash.dart';
 
 import '../Module/Order.dart';
 import 'package:thung_khao_rbac/Connect/Connection.dart';
+import 'package:intl/intl.dart';
 
 class OrderConnection extends Connection{
+
   DatabaseOrder _databaseOrder = DatabaseOrder('Bill.DB');
   List<Order> orderList = [];
   List<Bill> billList = [];
-  addOrder(){
 
+  // =============================================================================================================
+  // =================================  ORDER SYSTEM =============================================================
+  // =============================================================================================================
+
+  // =================================  SEND ORDER TO SERVER BY ADMIN SHOP ===========================================
+  Future<bool> addOrder(List<Bill> bill,String total,String idShop) async {
+    try{
+      var jsonBill = jsonEncode(bill);
+      String time = DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()) +
+          "." +
+          DateTime.now().millisecond.toString();
+      String complete = await connectionSendOrder(
+          total: total, bill: jsonBill, date: time, IDShop: idShop);
+      if (complete == 'OK') {
+        return true;
+      } else {
+        return false;
+      }
+    }catch(error){
+      return false;
+    }
   }
+  // =================================  UPDATE STATUS ORDER By ADMIN SYSTEM ===========================================
   updateOrder(){
 
   }
+  // =================================  SELECT ALL ORDER By ADMIN SYSTEM ===========================================
   Future<bool> selectAllOrder(String status) async{
     try{
       String response = await connectionOrderAll(status: status);
@@ -38,7 +62,20 @@ class OrderConnection extends Connection{
     catch (error){
       return false;
     }
-  }Future<bool> selectAllBill(String idShop) async{
+  }
+  // =================================  SELECT ALL ORDER By ADMIN SHOP ===========================================
+
+  selectShopOrder(String status,String id) async {
+
+  }
+
+
+  // =============================================================================================================
+  // =================================  CART SYSTEM ==============================================================
+  // =============================================================================================================
+
+  // =================================  SELECT ALL ORDER IN CART ===========================================
+  Future<bool> selectAllBill(String idShop) async{
     try{
          List<Bill> listOrder  = await _databaseOrder.loadAllData(idShop);
          if(listOrder.length>0){
@@ -53,22 +90,30 @@ class OrderConnection extends Connection{
       return false;
     }
   }
+
+  // =================================  ADD ORDER IN CART ===========================================
   Future<bool> addOrderinBill(Bill bill) async{
     try{
       // billList.add(bill);
       await _databaseOrder.addOrder(bill);
       return true;
     }
+
+
+
+
+
     catch(error){
       return false;
     }
   }
-  Future<void> billClear(String idString) async {
-    await _databaseOrder.clearData(idString);
+  // =================================  CLEAR ALL ORDER IN CART By ADMIN SHOP =========================
+  Future<bool> billClear(String idString) async {
+    try{
+      await _databaseOrder.clearData(idString);
+      return true;
+    }catch(error){
+      return false;
+    }
   }
-
-  selectShopOrder(String status,String id) async {
-
-  }
-
 }

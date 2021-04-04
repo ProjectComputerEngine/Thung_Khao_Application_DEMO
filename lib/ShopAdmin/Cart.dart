@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:thung_khao_rbac/Configuration.dart';
 import 'package:thung_khao_rbac/Connect/BackEnd/Bill.dart';
 import 'package:thung_khao_rbac/Connect/BackEnd/Login.dart';
@@ -19,13 +21,24 @@ class Cart extends StatefulWidget {
 }
 
 class CartState extends State<Cart> {
+  StreamController<double> sum = StreamController();
+  double SUM = 0;
+  double sumPrice = 0;
   @override
   void initState() {
+    SUM=0;
+    sum.stream.listen((value) {
+      print(value.toString());
+      SUM += value;
+    }).onDone(() {
+      setState(() {});
+    });
     super.initState();
   }
 
   @override
   void dispose() {
+    sum.close();
     print('Dispose Cart Complete');
     super.dispose();
   }
@@ -95,10 +108,14 @@ class CartState extends State<Cart> {
                               builder: (context, snapshot) {
                                 if (snapshot.hasData) {
                                   if(snapshot.data){
+                                    List<Bill> bill = Provider.of<OrderConnection>(context).billList;
                                     return ListView.builder(
                                         itemCount: Provider.of<OrderConnection>(context).billList.length,
                                         itemBuilder: (context, index) {
-                                          return ProductItem(bill: Provider.of<OrderConnection>(context).billList[index]);
+                                          sumPrice = 0;
+                                          sum.isClosed ? null:sum.add(double.parse(bill[index].num)*double.parse(bill[index].price));
+                                          index == bill.length-1 ? sum.close():null;
+                                          return ProductItem(bill: bill[index]);
                                          });
                                   }
                                   else{
@@ -114,7 +131,9 @@ class CartState extends State<Cart> {
                         Container(
                           child: Row(
                             children: [
-                              TextButton(onPressed: ()=>Provider.of<OrderConnection>(context,listen: false).billClear(Provider.of<LoginConnection>(context,listen: false).shop.ID), child: Text('ล้าง'))
+                              Text(SUM.toString()),
+                              TextButton(onPressed: ()=>, child: Text('ล้าง')),
+                              // TextButton(onPressed: ()=>Provider.of<OrderConnection>(context,listen: false).addOrder(), child: Text('ส่งคำสั่งซื้อ'))
                             ],
                           ),
                         )

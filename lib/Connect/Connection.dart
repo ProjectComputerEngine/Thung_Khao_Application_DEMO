@@ -89,25 +89,25 @@ class Connection {
     }
   }
 // ------------------------------  SEND ORDER  ------------------------------
-  Future<bool> connectionSendOrder({BuildContext context,String bill,String IDShop,String date,String total}) async{
-    bool comlete = true;
-    var request = await MultipartRequest('POST', Uri.parse('http://$ipserver/shopping/index.php'));
-    print(IDShop.trim()+'|');
+  Future<String> connectionSendOrder({String bill,String IDShop,String date,String total}) async{
+    var request = MultipartRequest('POST', Uri.parse('http://$ipserver/shopping/index.php'));
     request.fields['bill'] =bill;
     request.fields['idShop']=IDShop.trim();
     request.fields['date'] = date;
     request.fields['total'] = total;
-    request.send().then((response) async {
-      response.stream.transform(utf8.decoder).listen((event) {
-        print(event);
-      });
-    }).catchError((onError) {
-      print(onError.toString());
-      comlete = false;
-    }).then((value){
-      print('Complete');
-    });
-    return comlete;
+
+    var response = await request.send();
+    if(response.statusCode == 200){
+      String body = await response.stream.bytesToString();
+      if(body != 'Error'){
+        return body;
+      }else{
+        return 'Error';
+      }
+    }
+    else{
+      return 'Error';
+    }
   }
 // ------------------------------   READ ORDER ALL ------------------------------
   Future<String> connectionOrderAll({String status}) async {
