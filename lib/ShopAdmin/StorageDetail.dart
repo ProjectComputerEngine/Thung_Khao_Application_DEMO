@@ -21,7 +21,7 @@ class StorageDetail extends StatefulWidget {
 class StorageDetailStatus extends State<StorageDetail> {
   TextEditingController nameController;
   TextEditingController priceController;
-  TextEditingController weightController;
+  TextEditingController weightController ;
   TextEditingController widthController;
   TextEditingController heightController;
   TextEditingController storageController;

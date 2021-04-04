@@ -38,14 +38,13 @@ class OrderConnection extends Connection{
     catch (error){
       return false;
     }
-  }Future<bool> selectAllBill() async{
+  }Future<bool> selectAllBill(String idShop) async{
     try{
-         var listOrder  = await _databaseOrder.loadAllData();
+         List<Bill> listOrder  = await _databaseOrder.loadAllData(idShop);
          if(listOrder.length>0){
            billList.clear();
            billList = listOrder;
-          return true;
-
+           return true;
       } else {
         return false;
       }
@@ -64,8 +63,8 @@ class OrderConnection extends Connection{
       return false;
     }
   }
-  Future<void> billClear() async {
-    await _databaseOrder.clearData();
+  Future<void> billClear(String idString) async {
+    await _databaseOrder.clearData(idString);
   }
 
   selectShopOrder(String status,String id) async {

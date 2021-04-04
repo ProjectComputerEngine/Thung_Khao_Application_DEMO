@@ -1,4 +1,6 @@
 import 'package:thung_khao_rbac/Configuration.dart';
+import 'package:thung_khao_rbac/Connect/BackEnd/Bill.dart';
+import 'package:thung_khao_rbac/Connect/BackEnd/Login.dart';
 import 'package:thung_khao_rbac/Connect/BackEnd/Order.dart';
 import 'package:thung_khao_rbac/ShopAdmin/StorageMain.dart';
 
@@ -89,15 +91,15 @@ class CartState extends State<Cart> {
                                   bottomLeft: Radius.circular(8),
                                   bottomRight: Radius.circular(8))),
                           child: FutureBuilder(
-                              future: Provider.of<OrderConnection>(context).selectAllBill(),
+                              future: Provider.of<OrderConnection>(context).selectAllBill(Provider.of<LoginConnection>(context).shop.ID),
                               builder: (context, snapshot) {
                                 if (snapshot.hasData) {
                                   if(snapshot.data){
                                     return ListView.builder(
                                         itemCount: Provider.of<OrderConnection>(context).billList.length,
                                         itemBuilder: (context, index) {
-                                          return ProductItem(bill: Provider.of<OrderConnection>(context).billList[index],);
-                                        });
+                                          return ProductItem(bill: Provider.of<OrderConnection>(context).billList[index]);
+                                         });
                                   }
                                   else{
                                     return Center(child: Text('ไม่พบข้อมูล',style: TextStyle(fontSize: Config.Error_fontH),),);
@@ -112,7 +114,7 @@ class CartState extends State<Cart> {
                         Container(
                           child: Row(
                             children: [
-                              TextButton(onPressed: ()=>Provider.of<OrderConnection>(context,listen: false).billClear(), child: Text('ล้าง'))
+                              TextButton(onPressed: ()=>Provider.of<OrderConnection>(context,listen: false).billClear(Provider.of<LoginConnection>(context,listen: false).shop.ID), child: Text('ล้าง'))
                             ],
                           ),
                         )

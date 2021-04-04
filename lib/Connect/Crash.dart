@@ -148,20 +148,21 @@ class DatabaseOrder {
 
   addOrder(Bill bill) async {
     var db = await this.openDatabase();
-    var store = intMapStoreFactory.store("Order");
+    var store = intMapStoreFactory.store(bill.ID_Shop);
       var keyID = store.add(db, {
         "id": bill.id,
         "name": bill.name,
         "num": bill.num,
         "price": bill.price,
-        "imageURL":bill.imageURL
+        "imageURL":bill.imageURL,
+        "ID_Shop":bill.ID_Shop
       });
     db.close();
   }
 
-  Future<dynamic> loadAllData() async {
+  Future<dynamic> loadAllData(String idShop) async {
     var db = await this.openDatabase();
-    var store = intMapStoreFactory.store("Order");
+    var store = intMapStoreFactory.store(idShop);
     var snapshot = await store.find(db);
     List bill = List<Bill>();
     for (var record in snapshot) {
@@ -170,15 +171,16 @@ class DatabaseOrder {
         name: record['name'],
         num: record['num'],
         price: record['price'],
-        imageURL: record['imageURL']
+        imageURL: record['imageURL'],
+        ID_Shop: record['ID_Shop']
       ));
     }
     return bill;
   }
 
-  Future clearData() async {
+  Future clearData(String idShop) async {
     var db = await this.openDatabase();
-    var store = intMapStoreFactory.store("Order");
+    var store = intMapStoreFactory.store(idShop);
     store.drop(db);
   }
 }

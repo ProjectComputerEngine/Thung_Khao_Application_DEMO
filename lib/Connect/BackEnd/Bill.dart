@@ -4,6 +4,7 @@ final String name;
 final String num;
 final String price;
 final String imageURL;
-Bill({this.imageURL, this.id, this.name, this.num, this.price});
+final String ID_Shop;
+Bill({this.ID_Shop, this.imageURL, this.id, this.name, this.num, this.price});
 
 }
