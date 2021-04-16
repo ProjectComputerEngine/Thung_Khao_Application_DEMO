@@ -30,7 +30,7 @@ class PersonalState extends State<PersonalAdminMain> {
     return WillPopScope(
       onWillPop: ()=>MinimizeApp.minimizeApp(),
       child: Scaffold(
-        bottomNavigationBar: MenuNavigation(),
+        bottomNavigationBar: MenuNavigation(page: 3,),
         body: Container(
           margin: MediaQuery.of(context).padding,
           child: Stack(

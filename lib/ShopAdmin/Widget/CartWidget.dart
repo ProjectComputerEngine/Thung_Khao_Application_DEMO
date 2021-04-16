@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:thung_khao_rbac/Configuration.dart';
 import 'package:thung_khao_rbac/Connect/BackEnd/Bill.dart';
+
+import '../StorageMain.dart';
 class AcessToStatus extends StatelessWidget {
   final String TextStatusINButton;
   const AcessToStatus({
@@ -101,15 +103,16 @@ class DateAndTime extends StatelessWidget {
 }
 
 class NameText extends StatelessWidget {
+  final String name;
   const NameText({
-    Key key,
+    Key key, this.name,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
         child: Text(
-          'ข้าวหอมมะลิ รสใบมะลิ สกัดพิเศษ',
+          name,
           style: TextStyle(fontSize: Config.OrderDetail_fontBB, color: Colors.black),
         ));
   }
@@ -156,7 +159,7 @@ class BacksButton extends StatelessWidget {
   }
 }
 
-    class ProductItem extends StatelessWidget {
+class ProductItem extends StatelessWidget {
   final Bill bill;
   const ProductItem({
     Key key, this.bill,
@@ -206,7 +209,7 @@ class BacksButton extends StatelessWidget {
                 MainAxisAlignment
                     .center,
                 children: [
-                  NameText(),
+                  NameText(name: bill.name,),
                   DateAndTime(
                     DateANDTimeFont:
                     'ราคา ${bill.price}   จำนวน  ${bill.num} ถุง',

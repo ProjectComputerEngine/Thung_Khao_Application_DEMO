@@ -88,7 +88,7 @@ class StorageDetailStatus extends State<StorageDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: MenuNavigation(),
+      bottomNavigationBar: MenuNavigation(page: 5,),
       body: Container(
         margin: MediaQuery.of(context).padding,
         child: Column(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:thung_khao_rbac/Admin/PersonalAdmin.dart';
 import 'package:thung_khao_rbac/Admin/Widget/BottonNavigationBarAdminWidget.dart';
 import 'package:thung_khao_rbac/Configuration.dart';
+import 'package:thung_khao_rbac/Connect/BackEnd/Login.dart';
 import 'package:thung_khao_rbac/Connect/BackEnd/Order.dart';
 import './Widget/OrderMainWidget.dart';
 
@@ -34,7 +35,7 @@ class BillState extends State<OrderMain> {
       onWillPop: () => Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => PersonalAdminMain())),
       child: Scaffold(
-        bottomNavigationBar: MenuNavigation(),
+        bottomNavigationBar: MenuNavigation(page: 0,),
         body: Form(
           child: Container(
             margin: MediaQuery.of(context).padding,
@@ -159,7 +160,7 @@ class BillState extends State<OrderMain> {
                     ),
                     Container(
                       child: FutureBuilder<bool>(
-                        future: Provider.of<OrderConnection>(context).selectAllOrder(status.toString()),
+                        future: Provider.of<OrderConnection>(context).selectAllOrder(status.toString(),Provider.of<LoginConnection>(context,listen: false).admin.ID),
                         builder: (context, snapshost) {
                           if (snapshost.hasData) {
                             if(snapshost.data){
@@ -169,12 +170,14 @@ class BillState extends State<OrderMain> {
                                   itemCount: listOrder.length,
                                   itemBuilder: (context, index) {
                                     return OrderItem(
+                                      bill: listOrder[index],
                                       UrlImage:
                                           listOrder[index].Image_URL,
                                       Date:listOrder[index].Date,
                                       IDOrder: listOrder[index].ID,
                                       NameOwner: listOrder[index].Name,
                                       Status: listOrder[index].Status,
+
                                     );
                                   });
                             }

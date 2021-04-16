@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:thung_khao_rbac/Admin/OrderDetail.dart';
 import 'package:thung_khao_rbac/Configuration.dart';
+import 'package:thung_khao_rbac/Connect/Module/Order.dart';
 class PictureProfile extends StatelessWidget {
   final String url;
   const PictureProfile({
@@ -130,14 +131,14 @@ class OrderItem extends StatelessWidget {
   final String NameOwner;
   final String Status;
   final String Date;
-
+  final Order bill;
   const OrderItem({
     Key key,
     this.UrlImage,
     this.IDOrder,
     this.NameOwner,
     this.Status,
-    this.Date,
+    this.Date, this.bill,
   }) : super(key: key);
 
   @override
@@ -147,7 +148,7 @@ class OrderItem extends StatelessWidget {
       height: MediaQuery.of(context).size.height * 0.09,
       color: Colors.white60,
       child: FlatButton(
-        onPressed: ()=>Navigator.push(context,MaterialPageRoute(builder: (context)=>OrderDetail())),
+        onPressed: ()=>Navigator.push(context,MaterialPageRoute(builder: (context)=>OrderDetail(bill: bill,id: bill.ID,))),
         child: Row(
           children: [
             CircleAvatar(

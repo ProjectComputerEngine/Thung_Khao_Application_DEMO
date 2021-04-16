@@ -4,6 +4,7 @@ import 'package:thung_khao_rbac/Configuration.dart';
 import 'package:thung_khao_rbac/Connect/BackEnd/Bill.dart';
 import 'package:thung_khao_rbac/Connect/BackEnd/Login.dart';
 import 'package:thung_khao_rbac/Connect/BackEnd/Order.dart';
+import 'package:thung_khao_rbac/ShopAdmin/BackEnd/CartBackend.dart';
 import 'package:thung_khao_rbac/ShopAdmin/StorageMain.dart';
 
 import './Widget/CartWidget.dart';
@@ -24,14 +25,17 @@ class CartState extends State<Cart> {
   StreamController<double> sum = StreamController();
   double SUM = 0;
   double sumPrice = 0;
+  int page = 1;
+
   @override
   void initState() {
-    SUM=0;
+    SUM = 0;
     sum.stream.listen((value) {
       print(value.toString());
       SUM += value;
-    }).onDone(() {
       setState(() {});
+    }).onDone(() {
+      // setState(() {});
     });
     super.initState();
   }
@@ -46,9 +50,10 @@ class CartState extends State<Cart> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: ()=>Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> StorageMain())),
+      onWillPop: () => Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => StorageMain())),
       child: Scaffold(
-        bottomNavigationBar: MenuNavigation(),
+        bottomNavigationBar: MenuNavigation(page: page,),
         body: Form(
             child: Container(
           margin: MediaQuery.of(context).padding,
@@ -97,29 +102,51 @@ class CartState extends State<Cart> {
                           TextTitle: 'สินค้า',
                         ),
                         Container(
-                          height: MediaQuery.of(context).size.height*0.5,
+                          height: MediaQuery.of(context).size.height * 0.5,
                           decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.only(
                                   bottomLeft: Radius.circular(8),
                                   bottomRight: Radius.circular(8))),
                           child: FutureBuilder(
-                              future: Provider.of<OrderConnection>(context).selectAllBill(Provider.of<LoginConnection>(context).shop.ID),
+                              future: Provider.of<OrderConnection>(context)
+                                  .selectAllBill(
+                                      Provider.of<LoginConnection>(context)
+                                          .shop
+                                          .ID),
                               builder: (context, snapshot) {
                                 if (snapshot.hasData) {
-                                  if(snapshot.data){
-                                    List<Bill> bill = Provider.of<OrderConnection>(context).billList;
+                                  if (snapshot.data) {
+                                    List<Bill> bill =
+                                        Provider.of<OrderConnection>(context)
+                                            .billList;
                                     return ListView.builder(
-                                        itemCount: Provider.of<OrderConnection>(context).billList.length,
+                                        itemCount: Provider.of<OrderConnection>(
+                                                context)
+                                            .billList
+                                            .length,
                                         itemBuilder: (context, index) {
                                           sumPrice = 0;
-                                          sum.isClosed ? null:sum.add(double.parse(bill[index].num)*double.parse(bill[index].price));
-                                          index == bill.length-1 ? sum.close():null;
+                                          sum.isClosed
+                                              ? null
+                                              : sum.add(double.parse(
+                                                      bill[index].num) *
+                                                  double.parse(
+                                                      bill[index].price));
+                                          index == bill.length - 1
+                                              ? sum.close()
+                                              : null;
                                           return ProductItem(bill: bill[index]);
-                                         });
-                                  }
-                                  else{
-                                    return Center(child: Text('ไม่พบข้อมูล',style: TextStyle(fontSize: Config.Error_fontH),),);
+                                        });
+                                  } else {
+                                    SUM = 0;
+                                    return Center(
+                                      child: Text(
+                                        'ไม่พบข้อมูล',
+                                        style: TextStyle(
+                                            fontSize: Config.Error_fontH),
+                                      ),
+                                    );
                                   }
                                 } else {
                                   return Center(
@@ -132,8 +159,12 @@ class CartState extends State<Cart> {
                           child: Row(
                             children: [
                               Text(SUM.toString()),
-                              TextButton(onPressed: ()=>, child: Text('ล้าง')),
-                              // TextButton(onPressed: ()=>Provider.of<OrderConnection>(context,listen: false).addOrder(), child: Text('ส่งคำสั่งซื้อ'))
+                              TextButton(
+                                  onPressed: () => clearCart(context),
+                                  child: Text('ล้าง')),
+                              TextButton(
+                                  onPressed: () => SUM == 0.0? showMyDialogY(context, 'กรุณาเลือกสินค้าก่อนส่งคำสั่งซื้อ'):sendOrder(context,SUM.toString()),
+                                  child: Text('ส่งคำสั่งซื้อ'))
                             ],
                           ),
                         )

@@ -92,7 +92,7 @@ class AddProductState extends State<AddProductMain> {
       onWillPop: () => Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => StorageMain())),
       child: Scaffold(
-        bottomNavigationBar: MenuNavigation(),
+        bottomNavigationBar: MenuNavigation(page: 6,),
         body: Container(
           margin: MediaQuery.of(context).padding,
           child: Column(

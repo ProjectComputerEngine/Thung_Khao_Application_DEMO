@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:thung_khao_rbac/Connect/BackEnd/Bill.dart';
+import 'package:thung_khao_rbac/Connect/Module/Order.dart';
+import 'package:thung_khao_rbac/Connect/Module/OrderDetail.dart';
 import 'package:thung_khao_rbac/ShopAdmin/OrderDetail.dart';
 import 'package:thung_khao_rbac/Configuration.dart';
 
@@ -132,6 +135,7 @@ class OrderItem extends StatelessWidget {
   final String NameOwner;
   final String Status;
   final String Date;
+  final Order bill;
 
   const OrderItem({
     Key key,
@@ -139,7 +143,7 @@ class OrderItem extends StatelessWidget {
     this.IDOrder,
     this.NameOwner,
     this.Status,
-    this.Date,
+    this.Date, this.bill,
   }) : super(key: key);
 
   @override
@@ -149,7 +153,7 @@ class OrderItem extends StatelessWidget {
       height: MediaQuery.of(context).size.height * 0.09,
       color: Colors.white60,
       child: FlatButton(
-        onPressed: ()=>Navigator.push(context,MaterialPageRoute(builder: (context)=>OrderDetail())),
+        onPressed: ()=>Navigator.push(context,MaterialPageRoute(builder: (context)=>OrderDetail(id: bill.ID,bill: bill,))),
         child: Row(
           children: [
             CircleAvatar(
@@ -173,14 +177,14 @@ class OrderItem extends StatelessWidget {
                   children: [
                     Text(
                       'Order #${IDOrder}',
-                      style: TextStyle(color: Colors.red,fontSize: Config.OrderHistory_fontB),
+                      style: TextStyle(color: Colors.red,fontSize: Config.OrderDetail_fontB),
                     ),
                     Text(
                       NameOwner,
-                      style: TextStyle(fontSize: Config.OrderHistory_fontBS, color: Colors.black),
+                      style: TextStyle(fontSize: Config.OrderMain_fontB, color: Colors.black),
                     ),
                     Text(Date,
-                        style: TextStyle(fontSize: Config.OrderHistory_fontB, color: Colors.black38))
+                        style: TextStyle(fontSize: Config.OrderMain_fontB, color: Colors.black38))
                   ]),
             ),
             Container(
@@ -203,3 +207,4 @@ class OrderItem extends StatelessWidget {
     );
   }
 }
+

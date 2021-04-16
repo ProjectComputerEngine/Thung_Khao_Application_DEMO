@@ -6,8 +6,9 @@ import '../StorageMain.dart';
 import '../AdminMain.dart';
 import '../PersonalAdmin.dart';
 class MenuNavigation extends StatelessWidget {
+  final int page;
   const MenuNavigation({
-    Key key,
+    Key key, this.page,
   }) : super(key: key);
 
   @override
@@ -19,18 +20,20 @@ class MenuNavigation extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           NavigationButton(
+            select: page==0|| page==4 ? true:null,
             BarIcon: Icon(Icons.book),
             BarText: 'คำสั่งซื้อ',
             goto: (){
               print('Go to Order Main Admin');
-              Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>OrderMain()));
+              page !=0? Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>OrderMain())):null;
             },
           ),
           NavigationButton(
+            select: page==1|| page==5|| page==6 ? true:null,
             BarIcon: Icon(Icons.storage),
             goto: (){
               print('Go to Storage Main Admin');
-              Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>StorageMain()));
+              page!=1? Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>StorageMain())):null;
             },
             BarText: 'คลังสินค้า',
           ),
@@ -44,19 +47,21 @@ class MenuNavigation extends StatelessWidget {
           //   },
           // ),
           NavigationButton(
+
             BarIcon: Icon(Icons.chat),
             BarText: 'ข้อความ',
             goto: (){
-              Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>InboxMain()));
+               Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>InboxMain()));
 
               print('Go to Inbox');
             },
           ),
           NavigationButton(
+            select: page==3 ? true:null,
             BarIcon: Icon(Icons.account_circle),
             goto: (){
               print('Go to Personal Admin Main');
-              Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>PersonalAdminMain()));
+              page!=3? Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>PersonalAdminMain())):null;
 
             },
             BarText: 'ข้อมูลส่วนตัว',
@@ -72,17 +77,17 @@ class NavigationButton extends StatelessWidget {
   final Icon BarIcon;
   final String BarText;
   final Function goto;
-
+  final bool select;
   const NavigationButton({
     Key key,
     this.BarIcon,
-    this.BarText, this.goto,
+    this.BarText, this.goto, this.select,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: ShapeDecoration(shape: CircleBorder()),
+      decoration: select!=null? BoxDecoration(border: Border(bottom: BorderSide(width: 1,color: Colors.black))):BoxDecoration(),
       child: FlatButton(
         onPressed: goto,
         child: Column(

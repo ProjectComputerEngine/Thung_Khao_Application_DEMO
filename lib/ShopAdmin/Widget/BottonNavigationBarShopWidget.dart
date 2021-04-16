@@ -6,8 +6,9 @@ import '../OrderHistory.dart';
 import '../../ShopAdmin/Cart.dart';
 import '../ShopMain.dart';
 class MenuNavigation extends StatelessWidget {
+  final int page;
   const MenuNavigation({
-    Key key,
+    Key key, this.page,
   }) : super(key: key);
 
   @override
@@ -23,7 +24,7 @@ class MenuNavigation extends StatelessWidget {
             BarText: 'คำสั่งซื้อ',
             goto: (){
               print('Go to Order Main Admin');
-              Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>OrderHistory()));
+              page!=0? Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>OrderHistory())) : null;
             },
           ),
 
@@ -32,7 +33,7 @@ class MenuNavigation extends StatelessWidget {
             BarText: 'ตะกร้า',
             goto: (){
               print('Go to Admin Main');
-              Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>Cart()));
+              page!=1? Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>Cart())):null;
 
             },
           ),
@@ -40,7 +41,7 @@ class MenuNavigation extends StatelessWidget {
             BarIcon: Icon(Icons.storage),
             goto: (){
               print('Go to Storage Main Admin');
-              Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>StorageMain()));
+             page!=2? Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>StorageMain())):null;
             },
             BarText: 'คลังสินค้า',
           ),
@@ -49,7 +50,6 @@ class MenuNavigation extends StatelessWidget {
             BarText: 'ข้อความ',
             goto: (){
               Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>ChatBoxMain()));
-
               print('Go to Inbox');
             },
           ),
@@ -57,7 +57,7 @@ class MenuNavigation extends StatelessWidget {
             BarIcon: Icon(Icons.account_circle),
             goto: (){
               print('Go to Personal Shop Main');
-              Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>ShopMain()));
+              page!=4? Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>ShopMain())):null;
 
             },
             BarText: 'ข้อมูลส่วนตัว',

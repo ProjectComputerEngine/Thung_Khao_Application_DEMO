@@ -110,11 +110,45 @@ class Connection {
     }
   }
 // ------------------------------   READ ORDER ALL ------------------------------
-  Future<String> connectionOrderAll({String status}) async {
-    String url = "http://$ipserver/shopping/orderAll.php?status=$status";
+  Future<String> connectionOrderAll({String status,String id}) async {
+    String url = "http://$ipserver/shopping/orderAll.php?status=$status&id=$id";
     var response = await get(url);
     if (response.statusCode == 200) {
       if(response.body.isNotEmpty){
+        return response.body;
+      }
+      else {
+        return null;
+        // showMyDialog(context, 'การเชื่อมต่อล้มเหลว กรุณาลองใหม่อีกครั้ง !');
+      }
+    } else {
+      return null;
+      // showMyDialog(context, 'การเชื่อมต่อล้มเหลว กรุณาลองใหม่อีกครั้ง !');
+    }
+  }
+  // ------------------------------   READ ORDER Detail ------------------------------
+  Future<String> connectionOrderDetail({String id}) async {
+    String url = "http://$ipserver/shopping/orderDetail.php?&id=$id";
+    var response = await get(url);
+    if (response.statusCode == 200) {
+      if(response.body.isNotEmpty){
+        return response.body;
+      }
+      else {
+        return null;
+        // showMyDialog(context, 'การเชื่อมต่อล้มเหลว กรุณาลองใหม่อีกครั้ง !');
+      }
+    } else {
+      return null;
+      // showMyDialog(context, 'การเชื่อมต่อล้มเหลว กรุณาลองใหม่อีกครั้ง !');
+    }
+  }
+  // ------------------------------   READ ORDER Update ------------------------------
+  Future<String> connectionOrderUpdate({String id,String status}) async {
+    String url = "http://10.37.61.12/shopping/updateOrder.php?&id=$id&status=$status";
+    var response = await get(url);
+    if (response.statusCode == 200) {
+      if(response.body.isEmpty){
         return response.body;
       }
       else {

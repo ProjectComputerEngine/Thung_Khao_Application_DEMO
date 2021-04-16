@@ -39,7 +39,7 @@ class StorageStatus extends State<StorageMain> {
           bottomNavigationBar: Container(
             height: MediaQuery.of(context).size.height * 0.08,
             color: Colors.white,
-            child: MenuNavigation(),
+            child: MenuNavigation(page: 1,),
           ),
           body: Container(
             margin: MediaQuery.of(context).padding,

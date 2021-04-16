@@ -17,7 +17,7 @@ class ShopMain extends StatefulWidget {
 }
 
 class ShopMainState extends State<ShopMain> {
-
+  int page = 4;
   // var ShopData;
 
   @override
@@ -43,7 +43,7 @@ class ShopMainState extends State<ShopMain> {
     return WillPopScope(
       onWillPop: ()=>MinimizeApp.minimizeApp(),
       child: Scaffold(
-        bottomNavigationBar: MenuNavigation(),
+        bottomNavigationBar: MenuNavigation(page: page,),
         body: Container(
           margin: MediaQuery.of(context).padding,
           child: Stack(

@@ -1,7 +1,12 @@
+import 'package:thung_khao_rbac/Connect/BackEnd/Login.dart';
+import 'package:thung_khao_rbac/Connect/BackEnd/Order.dart';
+import 'package:thung_khao_rbac/Connect/Module/Order.dart';
+
+import '../Configuration.dart';
 import './Widget/OrderHistoryWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:thung_khao_rbac/ShopAdmin/Widget/BottonNavigationBarShopWidget.dart';
-
+import 'package:provider/provider.dart';
 import 'ShopMain.dart';
 
 class OrderHistory extends StatefulWidget {
@@ -13,6 +18,7 @@ class OrderHistory extends StatefulWidget {
 
 class OrderHistoryState extends State<OrderHistory> {
   int status = 0;
+  int page = 0;
 
   @override
   void initState() {
@@ -31,7 +37,7 @@ class OrderHistoryState extends State<OrderHistory> {
       onWillPop: () => Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => ShopMain())),
       child: Scaffold(
-        bottomNavigationBar: MenuNavigation(),
+        bottomNavigationBar: MenuNavigation(page: page,),
         body: Form(
           child: Container(
             margin: MediaQuery.of(context).padding,
@@ -156,24 +162,33 @@ class OrderHistoryState extends State<OrderHistory> {
                     ),
                     Container(
                       child: FutureBuilder(
-                        future: Future.value(true),
+                        future:  Provider.of<OrderConnection>(context).selectAllOrder(status.toString(),Provider.of<LoginConnection>(context,listen: false).shop.ID),
                         builder: (context, snapshost) {
                           if (snapshost.hasData) {
-                            return ListView.builder(
-                                padding: EdgeInsets.zero,
-                                itemCount: 10,
-                                itemBuilder: (context, index) {
-                                  return OrderItem(
-                                    UrlImage:
-                                    'https://i.pinimg.com/474x/51/59/4d/51594d7ca12505563ceaa6553cc69f3c.jpg',
-                                    Date: '12/1/60',
-                                    IDOrder: '0',
-                                    NameOwner: 'Samart',
-                                    Status: 'รอโอน',
-                                  );
-                                });
-                          } else {
-                            return CircularProgressIndicator();
+                            List<Order> listOrder= Provider.of<OrderConnection>(context).orderList;
+                            if(snapshost.data){
+                              return ListView.builder(
+                                  padding: EdgeInsets.zero,
+                                  itemCount: listOrder.length,
+                                  itemBuilder: (context, index) {
+                                    return OrderItem(
+                                      UrlImage: listOrder[index].Image_URL,
+                                      Date: listOrder[index].Date,
+                                      IDOrder: listOrder[index].ID,
+                                      NameOwner: listOrder[index].Name,
+                                      Status: listOrder[index].Status,
+                                      bill: listOrder[index],
+                                    );
+                                  });
+                            }
+                            else{
+                              return Center(child: Text('เกิดข้อผิดพลาดทางเครือข่าย กรุณาลองใหม่อีกครั้ง',style: TextStyle(fontSize: Config.Error_fontH),),);
+                            }
+                          } else if(snapshost.connectionState == ConnectionState.waiting){
+                            return Center(child: CircularProgressIndicator());
+                          }
+                          else{
+                            return Center(child: Text('ไม่พบข้อมูล',style: TextStyle(fontSize: Config.Error_fontH),),);
                           }
                         },
                       ),
